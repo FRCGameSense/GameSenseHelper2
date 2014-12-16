@@ -1,0 +1,621 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Forms;
+using System.IO;
+
+namespace GameSenseHelper2
+{
+    public partial class Form1 : Form
+    {
+        xSplitHandler2 xsHandler;
+        SettingsForm settingsForm;
+        List<string[]> QuestionsAddedList = new List<string[]>();
+        GSTwitchClient twitch;
+        GSTwitterClient twitter;
+        DataTable dataTable1, dataTable2;
+        BindingSource source1, source2;
+        int liveTime;
+
+        public Form1()
+        {
+            InitializeComponent();
+            xsHandler = new xSplitHandler2();
+            dataTable1 = new DataTable();
+            dataTable2 = new DataTable();
+
+            dataTable1.RowChanged += dataTable1_RowChanged;
+
+            source1 = new BindingSource();
+            source1.DataSource = dataTable1;
+            source2 = new BindingSource();
+            source2.DataSource = dataTable2;
+
+            dataTable1.Columns.Add("Question", typeof(string));
+            dataTable1.Columns.Add("Author", typeof(string));
+            dataTable2.Columns.Add("Question", typeof(string));
+            dataTable2.Columns.Add("Author", typeof(string));
+
+            dataGridView1.DataSource = source1;
+            dataGridView1.Columns[0].Width = 320;
+            dataGridView1.Columns[1].Width = 80;
+            dataGridView2.DataSource = source2;
+            dataGridView2.Columns[0].Width = 320;
+            dataGridView2.Columns[1].Width = 80;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ShutDown();
+        }
+
+        public void ShutDown()
+        {
+            twitch.Stop();
+            timer1.Stop();
+            Properties.Settings.Default.timerRunning = false;
+            Properties.Settings.Default.currentTopic = 0;
+            Properties.Settings.Default.Save();
+            this.Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.firstInstall)
+            {
+                MessageBox.Show("Welcome to BTL Helper!  Please go to settings and set your file paths.");
+                if (!xsHandler.checkXsplitLocation(Properties.Settings.Default.XsplitInstallLocation))
+                {
+                    Properties.Settings.Default.XsplitInstallLocation = "unknown";
+                    Properties.Settings.Default.Save();
+                }
+                settingsForm = new SettingsForm();
+                settingsForm.ShowDialog();
+            }
+
+            if (!xsHandler.checkXsplitLocation(Properties.Settings.Default.XsplitInstallLocation))
+            {
+                MessageBox.Show("Unable to locate XSplit installation in the location saved in settings, please go to Settings to locate manually.");
+            }
+            else
+            {
+                if (Properties.Settings.Default.firstInstall)
+                {
+                    string xml = System.IO.Path.Combine(Properties.Settings.Default.GSFolderLocation, "Software", "streamcontrol_base.xml");
+                    xsHandler.moveStreamControlXMLToXsplitLocation(xml);
+
+                    Properties.Settings.Default.firstInstall = false;
+                    Properties.Settings.Default.Save();
+                }
+                Properties.Settings.Default.Save();
+            }
+
+            //load these from settings
+            Host1ComboBox.Text = Properties.Settings.Default.Host1;
+            Host2ComboBox.Text = Properties.Settings.Default.Host2;
+            Guest1ComboBox.Text = Properties.Settings.Default.Guest1;
+            Guest2ComboBox.Text = Properties.Settings.Default.Guest2;
+            Host3ComboBox.Text = Properties.Settings.Default.Host3;
+            Host4ComboBox.Text = Properties.Settings.Default.Host4;
+
+            twitterHashtagBox.Text = Properties.Settings.Default.twitterSearchTag;
+
+            dataGridView1.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+            backgroundWorker1 = new BackgroundWorker();
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
+
+            xsHandler = new xSplitHandler2();
+            Properties.Settings.Default.timerRunning = false;
+            Properties.Settings.Default.currentTopic = 0;
+            verticalTickerDataGridView.Rows.Add("CLICK HERE TO ADD");
+
+            Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// Navigates to the next topic and publishes it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            //if there are topics
+            if (verticalTickerDataGridView.Rows.Count > 0)
+            {   
+                //if you're not out of topics, keep going
+                if (Properties.Settings.Default.currentTopic < verticalTickerDataGridView.Rows.Count - 1)
+                {
+                    verticalTickerDataGridView.ClearSelection();
+                    Properties.Settings.Default.currentTopic++;
+                    //select the current topic
+                    verticalTickerDataGridView.Rows[Properties.Settings.Default.currentTopic].Selected = true;
+                }
+                
+                Properties.Settings.Default.Save();                
+            }
+            publishTopics();
+        }
+
+        private void prevTopicButton_Click(object sender, EventArgs e)
+        {
+            //if there are topics
+            if (verticalTickerDataGridView.Rows.Count > 0)
+            {
+                //select the previous topic
+                if (Properties.Settings.Default.currentTopic > 0)
+                {
+                    verticalTickerDataGridView.ClearSelection();
+                    verticalTickerDataGridView.Rows[Properties.Settings.Default.currentTopic - 1].Selected = true;
+                    Properties.Settings.Default.currentTopic--;
+                }
+                Properties.Settings.Default.Save();
+            }
+            publishTopics();
+        }
+
+        private void verticalTickerDataGridView_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void publishButton_Click(object sender, EventArgs e)
+        {
+            verticalTickerDataGridView.ClearSelection();
+            verticalTickerDataGridView.Rows[Properties.Settings.Default.currentTopic].Selected = true;
+            publishTopics();
+
+            switch (tabControl1.SelectedTab.Name)
+            {
+                case "castersTab":
+                    publishCasters();
+                    break;
+                case "questionsTab":
+                    publishQuestion();
+                    break;
+                case "splashTab":
+                    publishSplashTab();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void publishSplashTab()
+        {
+            xsHandler.loadTagsFromXML();
+
+            xsHandler.changeXMLTag("splashTop", splashBottomBox.Text, true);
+            xsHandler.changeXMLTag("splashBottom", splashBottomBox.Text, true);
+
+            xsHandler.writeXMLFile();
+        }
+
+        private void publishQuestion()
+        {
+            try
+            {
+                Properties.Settings.Default.PublishedQuestion = dataGridView2[0, dataGridView2.CurrentRow.Index].Value.ToString();
+                Properties.Settings.Default.PublishedAuthor = dataGridView2[1, dataGridView2.CurrentRow.Index].Value.ToString();
+
+
+                Properties.Settings.Default.Save();
+
+                xsHandler.loadTagsFromXML();
+
+                xsHandler.changeXMLTag("question", Properties.Settings.Default.PublishedQuestion, true);
+                if (Properties.Settings.Default.PublishedAuthor == "")
+                    xsHandler.changeXMLTag("author", Properties.Settings.Default.PublishedAuthor, true);
+                else
+                    xsHandler.changeXMLTag("author", "-" + Properties.Settings.Default.PublishedAuthor, true);
+
+                xsHandler.writeXMLFile();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No question selected!");
+            }
+
+        }
+
+        public void publishCasters()
+        {
+            //save these to settings so they can be referenced outside this tab.
+            Properties.Settings.Default.Host1 = Host1ComboBox.Text;
+            Properties.Settings.Default.Host2 = Host2ComboBox.Text;
+            Properties.Settings.Default.Host3 = Host3ComboBox.Text;
+            Properties.Settings.Default.Host4 = Host4ComboBox.Text;
+            Properties.Settings.Default.Guest1 = Guest1ComboBox.Text;
+            Properties.Settings.Default.Guest2 = Guest2ComboBox.Text;
+
+
+            Properties.Settings.Default.Save();
+
+            xsHandler.loadTagsFromXML();
+
+            xsHandler.changeXMLTag("host1", Properties.Settings.Default.Host1, true);
+            xsHandler.changeXMLTag("host2", Properties.Settings.Default.Host2, true);
+            xsHandler.changeXMLTag("host3", Properties.Settings.Default.Host3, true);
+            xsHandler.changeXMLTag("host4", Properties.Settings.Default.Host4, true);
+            xsHandler.changeXMLTag("guest1", Properties.Settings.Default.Guest1, true);
+            xsHandler.changeXMLTag("guest2", Properties.Settings.Default.Guest2, true);
+
+            xsHandler.writeXMLFile();
+        }
+
+        public void publishTopics()
+        {
+            int currentTopicNum = Properties.Settings.Default.currentTopic;
+            int topicsLeft = (verticalTickerDataGridView.Rows.Count - currentTopicNum) - 1;
+
+            xsHandler.loadTagsFromXML();
+
+            if (topicsLeft >= 8)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    xsHandler.changeXMLTag("topic" + i, verticalTickerDataGridView.Rows[currentTopicNum + i].Cells[0].Value.ToString(), false);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < topicsLeft; i++)
+                {
+                    xsHandler.changeXMLTag("topic" + i, verticalTickerDataGridView.Rows[currentTopicNum + i].Cells[0].Value.ToString(), false);
+                }
+                for (int i = topicsLeft; i < 8; i++)
+                {
+                    xsHandler.changeXMLTag("topic" + i, "", false);
+                }
+
+            }
+
+            xsHandler.writeXMLFile();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.ShowDialog();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            liveTime++;
+
+            updateTimeLabel();
+        }
+
+        private void timeLabel_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.timerRunning)
+            {
+                timer1.Stop();
+                Properties.Settings.Default.timerRunning = false;
+            }
+            else
+            {
+                timer1.Start();
+                Properties.Settings.Default.timerRunning = true;
+            }
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void timeLabel_DoubleClick(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            liveTime = 0;
+            updateTimeLabel();
+
+        }
+
+        public void updateTimeLabel()
+        {
+            var span = new TimeSpan(0, 0, liveTime); //Or TimeSpan.FromSeconds(seconds); (see Jakob C´s answer)
+            var str = span.ToString(@"mm\:ss");
+
+            timeLabel.Text = str;
+
+        }
+
+        private void dataGridView2_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = dataGridView2.HitTest(e.X, e.Y).RowIndex;
+
+                if (currentMouseOverRow >= 0)
+                {
+                    dataGridView2.ClearSelection();
+                    dataGridView2.Rows[currentMouseOverRow].Selected = true;
+
+                    ContextMenu m = new ContextMenu();
+                    MenuItem menuPublishQuestion = new MenuItem("Publish");
+                    MenuItem menuMoveToTop = new MenuItem("Move To Top");
+                    MenuItem menuDeleteQuestion = new MenuItem("Delete");
+
+                    menuMoveToTop.Click += new EventHandler(menuQueueMoveToTop_Click);
+                    menuDeleteQuestion.Click += new EventHandler(menuQueueDeleteQuestion_Click);
+                    menuPublishQuestion.Click += new EventHandler(publishButton_Click);
+
+                    m.MenuItems.Add(menuPublishQuestion);
+                    m.MenuItems.Add(menuMoveToTop);
+                    m.MenuItems.Add(menuDeleteQuestion);
+                    m.Show(dataGridView2, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        private void menuQueueDeleteQuestion_Click(object sender, EventArgs e)
+        {
+            MenuItem clickedItem = sender as MenuItem;
+            dataTable2.Rows.RemoveAt(dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected));
+            dataGridView2.ClearSelection();
+
+        }
+
+        private void menuQueueMoveToTop_Click(object sender, EventArgs e)
+        {
+            MenuItem clickedItem = sender as MenuItem;
+            int index = dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            DataRow qRow = dataTable2.Rows[index];
+            DataRow newRow = dataTable2.NewRow();
+            newRow.ItemArray = qRow.ItemArray;
+            dataTable2.Rows.RemoveAt(index);
+            dataTable2.Rows.InsertAt(newRow, 0);
+            dataGridView2.ClearSelection();
+        }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = dataGridView1.HitTest(e.X, e.Y).RowIndex;
+
+                if (currentMouseOverRow >= 0)
+                {
+                    dataGridView1.ClearSelection();
+                    dataGridView1.Rows[currentMouseOverRow].Selected = true;
+
+                    ContextMenu m = new ContextMenu();
+                    MenuItem menuQueueQuestion = new MenuItem("Add To Queue");
+                    MenuItem menuDeleteQuestion = new MenuItem("Delete");
+
+                    menuQueueQuestion.Click += new EventHandler(menuQueueQuestion_Click);
+                    menuDeleteQuestion.Click += new EventHandler(menuDeleteQuestion_Click);
+
+                    m.MenuItems.Add(menuQueueQuestion);
+                    m.MenuItems.Add(menuDeleteQuestion);
+                    m.Show(dataGridView1, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        private void menuQueueQuestion_Click(object sender, EventArgs e)
+        {
+            MenuItem clickedItem = sender as MenuItem;
+            DataRow qRow = (DataRow)dataTable1.Rows[dataGridView1.Rows.GetFirstRow(DataGridViewElementStates.Selected)];
+            dataTable2.ImportRow(qRow);
+            dataGridView1.ClearSelection();
+        }
+
+        private void menuDeleteQuestion_Click(object sender, EventArgs e)
+        {
+            MenuItem clickedItem = sender as MenuItem;
+            dataTable1.Rows.RemoveAt(dataGridView1.Rows.GetFirstRow(DataGridViewElementStates.Selected));
+            dataGridView1.ClearSelection();
+
+        }
+
+        private void clearQuestionButton_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PublishedAuthor = "";
+            Properties.Settings.Default.PublishedQuestion = "";
+            Properties.Settings.Default.Save();
+
+            xsHandler.changeXMLTag("question", Properties.Settings.Default.PublishedQuestion, true);
+            if (Properties.Settings.Default.PublishedAuthor == "")
+                xsHandler.changeXMLTag("author", Properties.Settings.Default.PublishedAuthor, true);
+            else
+                xsHandler.changeXMLTag("author", "-" + Properties.Settings.Default.PublishedAuthor, true);
+
+            xsHandler.writeXMLFile();
+        }
+
+        private void clearQuestionsButton_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("This cannot be undone.", "Are you sure?", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                dataTable1.Rows.Clear();
+                QuestionsAddedList.Clear();
+            }
+        }
+
+        private void manualQuestionButton_Click(object sender, EventArgs e)
+        {
+            BTLQuestionForm manualForm = new BTLQuestionForm();
+            manualForm.FormClosed += manualForm_FormClosed;
+
+            manualForm.ShowDialog();
+        }
+
+        private void manualForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (Properties.Settings.Default.ManualQuestion != "")
+            {
+                DataRow row = dataTable1.NewRow();
+                row["question"] = Properties.Settings.Default.ManualQuestion;
+                row["author"] = Properties.Settings.Default.ManualAuthor;
+                dataTable1.Rows.Add(row);
+            }
+        }
+
+        private void twitterGetQuestionsButton_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.twitterVerified)
+            {
+                Properties.Settings.Default.twitterSearchTag = twitterHashtagBox.Text;
+                Properties.Settings.Default.Save();
+
+                twitter = new GSTwitterClient();
+                twitter.Authenticate();
+                twitter.StartGettingQuestions();
+
+                IEnumerable<string[]> questionsNotAdded = twitter.QuestionsList.Except(QuestionsAddedList, new QuestionComparer());
+
+                foreach (string[] q in questionsNotAdded)
+                {
+                    DataRow row = dataTable1.NewRow();
+                    row["question"] = q[0];
+                    row["author"] = q[1];
+                    dataTable1.Rows.Add(q);
+                }
+
+                QuestionsAddedList = twitter.QuestionsList;
+            }
+        }
+
+        class QuestionComparer : IEqualityComparer<string[]>
+        {
+            public bool Equals(string[] s1, string[] s2)
+            {
+                if (s1[0] == s2[0] && s1[1] == s2[1])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            public int GetHashCode(string[] s)
+            {
+                int hCode = s[0].Length + s[1].Length;
+                return hCode.GetHashCode();
+            }
+        }
+
+        private void twitchGetQuestionsButton_Click(object sender, EventArgs e)
+        {
+            if (twitchGetQuestionsButton.Text == "Start Getting Questions")
+            {
+                twitch = new GSTwitchClient("#frcgamesense");
+                twitch.Connect();
+                twitch.Listen();
+                backgroundWorker1.RunWorkerAsync();
+                twitchGetQuestionsButton.Text = "Stop Getting Questions";
+            }
+            else
+            {
+                twitch.Stop();
+                backgroundWorker1.CancelAsync();
+                twitchGetQuestionsButton.Text = "Start Getting Questions";
+            }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            while (!worker.CancellationPending)
+            {
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    worker.ReportProgress(0);
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, EventArgs e)
+        {
+            if (twitch.QuestionsList.Count > 0)
+            {
+                foreach (string[] array in twitch.QuestionsList)
+                {
+                    DataRow row = dataTable1.NewRow();
+                    row["question"] = array[0];
+                    row["author"] = array[1];
+                    dataTable1.Rows.Add(row);
+                }
+                twitch.QuestionsList.Clear();
+            }
+        }
+
+        private void dataTable1_RowChanged(object sender, DataRowChangeEventArgs e)
+        {
+            if (!Properties.Settings.Default.ImportingQuestions)
+            {
+                StringBuilder sb = new StringBuilder();
+                //sb.AppendLine("Question, Author");
+                foreach (DataRow row in dataTable1.Rows)
+                {
+                    sb.AppendLine(row.ItemArray[0].ToString() + '\t' + row.ItemArray[1].ToString());
+                }
+
+                string backupFile = Path.Combine(Properties.Settings.Default.GSFolderLocation, "Documents", "GSQuestionsBackup.txt");
+
+                File.WriteAllText(backupFile, sb.ToString());
+            }
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            string questionsBackupFile = Path.Combine(Properties.Settings.Default.GSFolderLocation, "Documents", "GSQuestionsBackup.txt");
+            if (File.Exists(questionsBackupFile))
+            {
+                DialogResult result = MessageBox.Show("Found a questions backup file. \n\nWould you like to import the backed up questions?", "Backup File Found", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    importBackedUpQuestions(questionsBackupFile);
+                }
+            }
+        }
+
+        private void importBackedUpQuestions(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                StreamReader fileReader = new StreamReader(filePath, false);
+                Properties.Settings.Default.ImportingQuestions = true;
+                while (fileReader.Peek() != -1)
+                {
+                    string row = fileReader.ReadLine();
+                    string[] question = row.Split('\t');
+                    dataTable1.Rows.Add(question);
+                    Console.WriteLine(dataTable1.Rows[0].ItemArray[0]);
+                    QuestionsAddedList.Add(question);
+                }
+                fileReader.Dispose();
+                fileReader.Close();
+            }
+            Properties.Settings.Default.ImportingQuestions = false;
+        }
+
+        private void timeLabel_MouseDown(object sender, MouseEventArgs e)
+        {
+            timeLabel.BackColor = Color.FromArgb(228, 97, 22);
+        }
+
+        private void timeLabel_MouseUp(object sender, MouseEventArgs e)
+        {
+            timeLabel.BackColor = Color.FromArgb(50, 44, 40);
+        }
+    }
+}

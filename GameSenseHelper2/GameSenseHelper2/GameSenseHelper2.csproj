@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="GSBotCommand.cs" />
     <Compile Include="GSBotCommands.cs" />
+    <Compile Include="GSBotTbaCommunicator.cs" />
     <Compile Include="GSTwitchClient.cs" />
     <Compile Include="GSTwitterClient.cs" />
     <Compile Include="Program.cs" />
@@ -80,6 +81,19 @@
     <Compile Include="SettingsForm.designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TBAAlliance.cs" />
+    <Compile Include="TBAAlliances.cs" />
+    <Compile Include="TBAAllianceScoreBreakdown.cs" />
+    <Compile Include="TBAAwardRecipient.cs" />
+    <Compile Include="TBAEvent.cs" />
+    <Compile Include="TBAEventAlliance.cs" />
+    <Compile Include="TBAEventAward.cs" />
+    <Compile Include="TBAMatch.cs" />
+    <Compile Include="TBAScoreBreakDown.cs" />
+    <Compile Include="TBATeam.cs" />
+    <Compile Include="TBATeamRecord.cs" />
+    <Compile Include="TBAVideo.cs" />
+    <Compile Include="TBAWebcast.cs" />
     <Compile Include="xSplitHandler2.cs" />
     <EmbeddedResource Include="BTLQuestionForm.resx">
       <DependentUpon>BTLQuestionForm.cs</DependentUpon>

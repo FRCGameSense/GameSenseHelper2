@@ -22,6 +22,7 @@ namespace GameSenseHelper2
         DataTable dataTable1, dataTable2;
         BindingSource source1, source2;
         int liveTime;
+        GSBotTbaCommunicator tba = new GSBotTbaCommunicator();
 
         public Form1()
         {
@@ -48,6 +49,8 @@ namespace GameSenseHelper2
             dataGridView2.DataSource = source2;
             dataGridView2.Columns[0].Width = 320;
             dataGridView2.Columns[1].Width = 80;
+
+            toolTip1.SetToolTip(this.timeLabel, "Click - Play/Pause \nDouble Click - Reset");
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,7 +72,7 @@ namespace GameSenseHelper2
         {
             if (Properties.Settings.Default.firstInstall)
             {
-                MessageBox.Show("Welcome to BTL Helper!  Please go to settings and set your file paths.");
+                MessageBox.Show("Welcome to GS Helper!  Please go to settings and set your file paths.");
                 if (!xsHandler.checkXsplitLocation(Properties.Settings.Default.XsplitInstallLocation))
                 {
                     Properties.Settings.Default.XsplitInstallLocation = "unknown";
@@ -87,11 +90,11 @@ namespace GameSenseHelper2
             {
                 if (Properties.Settings.Default.firstInstall)
                 {
-                    string xml = System.IO.Path.Combine(Properties.Settings.Default.GSFolderLocation, "Software", "streamcontrol_base.xml");
-                    xsHandler.moveStreamControlXMLToXsplitLocation(xml);
-
                     Properties.Settings.Default.firstInstall = false;
                     Properties.Settings.Default.Save();
+                    
+                    string xml = System.IO.Path.Combine(Properties.Settings.Default.GSFolderLocation, "Software", "streamcontrol_base.xml");
+                    xsHandler.moveStreamControlXMLToXsplitLocation(xml);                    
                 }
                 Properties.Settings.Default.Save();
             }
@@ -121,6 +124,8 @@ namespace GameSenseHelper2
             verticalTickerDataGridView.Rows.Add("CLICK HERE TO ADD");
 
             Properties.Settings.Default.Save();
+
+            dateTextBox.Text = DateTime.Now.ToShortDateString();
         }
 
         /// <summary>
@@ -186,17 +191,29 @@ namespace GameSenseHelper2
                 case "splashTab":
                     publishSplashTab();
                     break;
+                case "tickerTab":
+                    publishTicker();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void publishTicker()
+        {
+            xsHandler.loadTagsFromXML();
+
+            xsHandler.changeXMLTag("tickerText", tickerTextBox.Text, false);
+
+            xsHandler.writeXMLFile();
         }
 
         private void publishSplashTab()
         {
             xsHandler.loadTagsFromXML();
 
-            xsHandler.changeXMLTag("splashTop", splashBottomBox.Text, true);
-            xsHandler.changeXMLTag("splashBottom", splashBottomBox.Text, true);
+            xsHandler.changeXMLTag("splashTop", splashBottomBox.Text, false);
+            xsHandler.changeXMLTag("splashBottom", splashBottomBox.Text, false);
 
             xsHandler.writeXMLFile();
         }
@@ -205,12 +222,6 @@ namespace GameSenseHelper2
         {
             try
             {
-                Properties.Settings.Default.PublishedQuestion = dataGridView2[0, dataGridView2.CurrentRow.Index].Value.ToString();
-                Properties.Settings.Default.PublishedAuthor = dataGridView2[1, dataGridView2.CurrentRow.Index].Value.ToString();
-
-
-                Properties.Settings.Default.Save();
-
                 xsHandler.loadTagsFromXML();
 
                 xsHandler.changeXMLTag("question", Properties.Settings.Default.PublishedQuestion, true);
@@ -301,11 +312,13 @@ namespace GameSenseHelper2
             if (Properties.Settings.Default.timerRunning)
             {
                 timer1.Stop();
+                timeLabel.ForeColor = Color.Gray;
                 Properties.Settings.Default.timerRunning = false;
             }
             else
             {
                 timer1.Start();
+                timeLabel.ForeColor = Color.White;
                 Properties.Settings.Default.timerRunning = true;
             }
 
@@ -316,13 +329,15 @@ namespace GameSenseHelper2
         {
             timer1.Stop();
             liveTime = 0;
+            timeLabel.ForeColor = Color.White;
+            Properties.Settings.Default.timerRunning = false;
             updateTimeLabel();
 
         }
 
         public void updateTimeLabel()
         {
-            var span = new TimeSpan(0, 0, liveTime); //Or TimeSpan.FromSeconds(seconds); (see Jakob C´s answer)
+            var span = new TimeSpan(0, 0, liveTime);
             var str = span.ToString(@"mm\:ss");
 
             timeLabel.Text = str;
@@ -344,17 +359,39 @@ namespace GameSenseHelper2
                     MenuItem menuPublishQuestion = new MenuItem("Publish");
                     MenuItem menuMoveToTop = new MenuItem("Move To Top");
                     MenuItem menuDeleteQuestion = new MenuItem("Delete");
+                    MenuItem menuCopyNextQuestionPrompt = new MenuItem("Copy Next Question Prompt");
 
                     menuMoveToTop.Click += new EventHandler(menuQueueMoveToTop_Click);
                     menuDeleteQuestion.Click += new EventHandler(menuQueueDeleteQuestion_Click);
-                    menuPublishQuestion.Click += new EventHandler(publishButton_Click);
+                    menuPublishQuestion.Click += new EventHandler(menuPublishQuestion_Click);
+                    menuCopyNextQuestionPrompt.Click += new EventHandler(menuCopyNextQuestionPrompt_Click);
 
                     m.MenuItems.Add(menuPublishQuestion);
                     m.MenuItems.Add(menuMoveToTop);
                     m.MenuItems.Add(menuDeleteQuestion);
+                    m.MenuItems.Add(menuCopyNextQuestionPrompt);
                     m.Show(dataGridView2, new Point(e.X, e.Y));
                 }
             }
+        }
+
+        private void menuCopyNextQuestionPrompt_Click(object sender, EventArgs e)
+        {
+            DataRow qRow = (DataRow)dataTable2.Rows[dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected)];
+
+            string nextQuestion = qRow[0].ToString();
+            Clipboard.SetText("Next Question: \"" + nextQuestion + "\"");
+        }
+
+        private void menuPublishQuestion_Click(object sender, EventArgs e)
+        {
+            DataRow qRow = (DataRow)dataTable2.Rows[dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected)];
+            Properties.Settings.Default.PublishedQuestion = qRow[0].ToString();
+            Properties.Settings.Default.PublishedAuthor = qRow[1].ToString();
+
+            Properties.Settings.Default.Save();
+
+            publishQuestion();
         }
 
         private void menuQueueDeleteQuestion_Click(object sender, EventArgs e)
@@ -616,6 +653,146 @@ namespace GameSenseHelper2
         private void timeLabel_MouseUp(object sender, MouseEventArgs e)
         {
             timeLabel.BackColor = Color.FromArgb(50, 44, 40);
+        }
+        
+        private void lastWeeksResultsButton_Click(object sender, EventArgs e)
+        {
+            DateTime thisDay = Convert.ToDateTime(dateTextBox.Text);
+            List<TBAEvent> events = tba.getEventsByYear(thisDay.Year);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (TBAEvent evt in events)
+            {
+                DateTime startDate = Convert.ToDateTime(evt.start_date);
+
+                if ((startDate - thisDay).TotalDays >= -7 && (startDate - thisDay).TotalDays < 0)
+                {
+                    List<TBAEventAward> awards = tba.getEventAwards(evt.event_code, evt.year);
+
+                    if (awards.Count > 0)
+                    {
+                        sb.Append(evt.name + ": ");
+
+                        sb.Append("Chairman's (");
+                        TBAEventAward ca = awards.Find(x => x.award_type.Equals(0));
+                        sb.Append(ca.recipient_list.First<TBAAwardRecipient>().team_number.ToString() + "),");
+
+                            
+                        sb.Append(" Winners (");
+                        TBAEventAward winners = awards.Find(x => x.award_type.Equals(1));
+                        int counter = 1;
+                        foreach (TBAAwardRecipient rcpt in winners.recipient_list)
+                        {
+                            sb.Append(rcpt.team_number.ToString());
+                            if (counter < winners.recipient_list.Count)
+                            {
+                                sb.Append(",");
+                            }
+                            else
+                            {
+                                sb.Append("),");
+                            }
+                            counter++;
+                        }
+
+                        sb.Append(" Finalists (");
+                        TBAEventAward finalists = awards.Find(x => x.award_type.Equals(2));
+                        counter = 1;
+                        foreach (TBAAwardRecipient rcpt in finalists.recipient_list)
+                        {
+                            sb.Append(rcpt.team_number.ToString());
+                            if (counter < finalists.recipient_list.Count)
+                            {
+                                sb.Append(",");
+                            }
+                            else
+                            {
+                                sb.Append(") | ");
+                            }
+                            counter++;
+                        }
+                    }
+                }
+            }
+            string resultsString = sb.ToString();
+            tickerTextBox.Text = resultsString.Substring(0, resultsString.Length - 3);
+        }
+
+        private void nextWeeksResultsButton_Click(object sender, EventArgs e)
+        {
+            DateTime thisDay = Convert.ToDateTime(dateTextBox.Text);
+            List<TBAEvent> events = tba.getEventsByYear(thisDay.Year);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (TBAEvent evt in events)
+            {
+                DateTime startDate = Convert.ToDateTime(evt.start_date);
+
+                if ((startDate - thisDay).TotalDays >= 0 && (startDate - thisDay).TotalDays < 7)
+                {
+                    sb.Append(evt.name + " (");
+                    DateTime start = Convert.ToDateTime(evt.start_date);
+                    DateTime end = Convert.ToDateTime(evt.end_date);
+                    sb.Append(start.Month + "/" + start.Day + "-" + end.Month + "/" + end.Day + ") | ");
+                }
+            }
+
+            string eventsString = sb.ToString();
+
+            tickerTextBox.Text = eventsString.Substring(0, eventsString.Length - 3);
+        }
+
+        private void verticalTickerDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = verticalTickerDataGridView.HitTest(e.X, e.Y).RowIndex;
+
+                if (currentMouseOverRow >= 0)
+                {
+                    ContextMenu m = new ContextMenu();
+                    MenuItem menuInsertTopics = new MenuItem("Insert");
+                    MenuItem menuDeleteTopics = new MenuItem("Delete");
+
+                    menuInsertTopics.Click += new EventHandler(menuInsertTopics_Click);
+                    menuDeleteTopics.Click += new EventHandler(menuDeleteTopics_Click);
+
+                    m.MenuItems.Add(menuInsertTopics);
+                    m.MenuItems.Add(menuDeleteTopics);
+                    m.Show(verticalTickerDataGridView, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        private void menuInsertTopics_Click(object sender, EventArgs e)
+        {
+            MenuItem clickedItem = sender as MenuItem;
+
+            int topMostIndex = 1000;
+            foreach (DataGridViewCell cell in verticalTickerDataGridView.SelectedCells)
+            {
+                if (cell.RowIndex < topMostIndex)
+                {
+                    topMostIndex = cell.RowIndex;
+                }
+            }
+
+            foreach(DataGridViewCell selectedCell in verticalTickerDataGridView.SelectedCells)
+            {
+                DataGridViewRow insertCell = new DataGridViewRow();
+                verticalTickerDataGridView.Rows.Insert(topMostIndex, insertCell);
+            }
+            
+        }
+
+        private void menuDeleteTopics_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewCell selectedCell in verticalTickerDataGridView.SelectedCells)
+            {
+                verticalTickerDataGridView.Rows.RemoveAt(selectedCell.RowIndex);
+            }
         }
     }
 }

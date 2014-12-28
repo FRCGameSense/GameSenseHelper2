@@ -49,21 +49,20 @@
             this.publishButton = new System.Windows.Forms.Button();
             this.timeLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.castersTab = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Guest2ComboBox = new System.Windows.Forms.ComboBox();
-            this.Host1ComboBox = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Guest1ComboBox = new System.Windows.Forms.ComboBox();
-            this.Host2ComboBox = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.Host4ComboBox = new System.Windows.Forms.ComboBox();
-            this.Host3ComboBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tickerTab = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.dateTextBox = new System.Windows.Forms.TextBox();
+            this.nextWeeksResultsButton = new System.Windows.Forms.Button();
+            this.lastWeeksResultsButton = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tickerTextBox = new System.Windows.Forms.TextBox();
+            this.splashTab = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.splashBottomBox = new System.Windows.Forms.TextBox();
+            this.splashTopBox = new System.Windows.Forms.TextBox();
             this.questionsTab = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -78,23 +77,33 @@
             this.twitterGetQuestionsButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.twitchGetQuestionsButton = new System.Windows.Forms.Button();
-            this.splashTab = new System.Windows.Forms.TabPage();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.splashBottomBox = new System.Windows.Forms.TextBox();
-            this.splashTopBox = new System.Windows.Forms.TextBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.castersTab = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Guest2ComboBox = new System.Windows.Forms.ComboBox();
+            this.Host1ComboBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Guest1ComboBox = new System.Windows.Forms.ComboBox();
+            this.Host2ComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Host4ComboBox = new System.Windows.Forms.ComboBox();
+            this.Host3ComboBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.verticalTickerDataGridView)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.castersTab.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.tickerTab.SuspendLayout();
+            this.splashTab.SuspendLayout();
             this.questionsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.splashTab.SuspendLayout();
+            this.castersTab.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -183,13 +192,14 @@
             this.verticalTickerDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.topics});
             this.verticalTickerDataGridView.Location = new System.Drawing.Point(0, 115);
-            this.verticalTickerDataGridView.MultiSelect = false;
             this.verticalTickerDataGridView.Name = "verticalTickerDataGridView";
             this.verticalTickerDataGridView.RowHeadersVisible = false;
             this.verticalTickerDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.verticalTickerDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.verticalTickerDataGridView.Size = new System.Drawing.Size(145, 412);
             this.verticalTickerDataGridView.StandardTab = true;
             this.verticalTickerDataGridView.TabIndex = 4;
+            this.verticalTickerDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.verticalTickerDataGridView_MouseDown);
             // 
             // topics
             // 
@@ -248,205 +258,142 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tabControl1
+            // backgroundWorker1
             // 
-            this.tabControl1.Controls.Add(this.castersTab);
-            this.tabControl1.Controls.Add(this.questionsTab);
-            this.tabControl1.Controls.Add(this.splashTab);
-            this.tabControl1.Location = new System.Drawing.Point(151, 71);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1126, 500);
-            this.tabControl1.TabIndex = 7;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // castersTab
+            // tickerTab
             // 
-            this.castersTab.BackColor = System.Drawing.Color.DarkGray;
-            this.castersTab.Controls.Add(this.groupBox1);
-            this.castersTab.Location = new System.Drawing.Point(4, 22);
-            this.castersTab.Name = "castersTab";
-            this.castersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.castersTab.Size = new System.Drawing.Size(1118, 474);
-            this.castersTab.TabIndex = 0;
-            this.castersTab.Text = "Hosts & Guests";
+            this.tickerTab.BackColor = System.Drawing.Color.DarkGray;
+            this.tickerTab.Controls.Add(this.label13);
+            this.tickerTab.Controls.Add(this.dateTextBox);
+            this.tickerTab.Controls.Add(this.nextWeeksResultsButton);
+            this.tickerTab.Controls.Add(this.lastWeeksResultsButton);
+            this.tickerTab.Controls.Add(this.label12);
+            this.tickerTab.Controls.Add(this.tickerTextBox);
+            this.tickerTab.Location = new System.Drawing.Point(4, 22);
+            this.tickerTab.Name = "tickerTab";
+            this.tickerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.tickerTab.Size = new System.Drawing.Size(1118, 474);
+            this.tickerTab.TabIndex = 6;
+            this.tickerTab.Text = "Ticker";
             // 
-            // groupBox1
+            // label13
             // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.Guest2ComboBox);
-            this.groupBox1.Controls.Add(this.Host1ComboBox);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.Guest1ComboBox);
-            this.groupBox1.Controls.Add(this.Host2ComboBox);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.Host4ComboBox);
-            this.groupBox1.Controls.Add(this.Host3ComboBox);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.ForeColor = System.Drawing.Color.Black;
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(262, 192);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Names";
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Black;
+            this.label13.Location = new System.Drawing.Point(917, 45);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(33, 13);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "Date:";
             // 
-            // label1
+            // dateTextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(21, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Host 1";
+            this.dateTextBox.Location = new System.Drawing.Point(956, 42);
+            this.dateTextBox.Name = "dateTextBox";
+            this.dateTextBox.Size = new System.Drawing.Size(152, 20);
+            this.dateTextBox.TabIndex = 7;
             // 
-            // Guest2ComboBox
+            // nextWeeksResultsButton
             // 
-            this.Guest2ComboBox.ForeColor = System.Drawing.Color.Black;
-            this.Guest2ComboBox.FormattingEnabled = true;
-            this.Guest2ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
-            this.Guest2ComboBox.Location = new System.Drawing.Point(73, 159);
-            this.Guest2ComboBox.Name = "Guest2ComboBox";
-            this.Guest2ComboBox.Size = new System.Drawing.Size(176, 21);
-            this.Guest2ComboBox.TabIndex = 18;
+            this.nextWeeksResultsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(44)))), ((int)(((byte)(40)))));
+            this.nextWeeksResultsButton.FlatAppearance.BorderSize = 0;
+            this.nextWeeksResultsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(97)))), ((int)(((byte)(22)))));
+            this.nextWeeksResultsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(87)))), ((int)(((byte)(105)))));
+            this.nextWeeksResultsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextWeeksResultsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(97)))), ((int)(((byte)(22)))));
+            this.nextWeeksResultsButton.Location = new System.Drawing.Point(886, 107);
+            this.nextWeeksResultsButton.Name = "nextWeeksResultsButton";
+            this.nextWeeksResultsButton.Size = new System.Drawing.Size(222, 33);
+            this.nextWeeksResultsButton.TabIndex = 6;
+            this.nextWeeksResultsButton.Text = "Get Next Week\'s Events";
+            this.nextWeeksResultsButton.UseVisualStyleBackColor = false;
+            this.nextWeeksResultsButton.Click += new System.EventHandler(this.nextWeeksResultsButton_Click);
             // 
-            // Host1ComboBox
+            // lastWeeksResultsButton
             // 
-            this.Host1ComboBox.ForeColor = System.Drawing.Color.Black;
-            this.Host1ComboBox.FormattingEnabled = true;
-            this.Host1ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
-            this.Host1ComboBox.Location = new System.Drawing.Point(73, 24);
-            this.Host1ComboBox.Name = "Host1ComboBox";
-            this.Host1ComboBox.Size = new System.Drawing.Size(176, 21);
-            this.Host1ComboBox.TabIndex = 7;
+            this.lastWeeksResultsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(44)))), ((int)(((byte)(40)))));
+            this.lastWeeksResultsButton.FlatAppearance.BorderSize = 0;
+            this.lastWeeksResultsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(97)))), ((int)(((byte)(22)))));
+            this.lastWeeksResultsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(87)))), ((int)(((byte)(105)))));
+            this.lastWeeksResultsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lastWeeksResultsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(97)))), ((int)(((byte)(22)))));
+            this.lastWeeksResultsButton.Location = new System.Drawing.Point(886, 68);
+            this.lastWeeksResultsButton.Name = "lastWeeksResultsButton";
+            this.lastWeeksResultsButton.Size = new System.Drawing.Size(222, 33);
+            this.lastWeeksResultsButton.TabIndex = 6;
+            this.lastWeeksResultsButton.Text = "Get Last Week\'s Results";
+            this.lastWeeksResultsButton.UseVisualStyleBackColor = false;
+            this.lastWeeksResultsButton.Click += new System.EventHandler(this.lastWeeksResultsButton_Click);
             // 
-            // label6
+            // label12
             // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(21, 163);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Guest 2";
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.Black;
+            this.label12.Location = new System.Drawing.Point(13, 10);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(122, 20);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "TICKER TEXT";
             // 
-            // label2
+            // tickerTextBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(21, 55);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Host 2";
+            this.tickerTextBox.Location = new System.Drawing.Point(17, 33);
+            this.tickerTextBox.Multiline = true;
+            this.tickerTextBox.Name = "tickerTextBox";
+            this.tickerTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tickerTextBox.Size = new System.Drawing.Size(763, 423);
+            this.tickerTextBox.TabIndex = 1;
             // 
-            // Guest1ComboBox
+            // splashTab
             // 
-            this.Guest1ComboBox.ForeColor = System.Drawing.Color.Black;
-            this.Guest1ComboBox.FormattingEnabled = true;
-            this.Guest1ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
-            this.Guest1ComboBox.Location = new System.Drawing.Point(73, 132);
-            this.Guest1ComboBox.Name = "Guest1ComboBox";
-            this.Guest1ComboBox.Size = new System.Drawing.Size(176, 21);
-            this.Guest1ComboBox.TabIndex = 13;
+            this.splashTab.BackColor = System.Drawing.Color.DarkGray;
+            this.splashTab.Controls.Add(this.label9);
+            this.splashTab.Controls.Add(this.label8);
+            this.splashTab.Controls.Add(this.splashBottomBox);
+            this.splashTab.Controls.Add(this.splashTopBox);
+            this.splashTab.Location = new System.Drawing.Point(4, 22);
+            this.splashTab.Name = "splashTab";
+            this.splashTab.Padding = new System.Windows.Forms.Padding(3);
+            this.splashTab.Size = new System.Drawing.Size(1118, 474);
+            this.splashTab.TabIndex = 4;
+            this.splashTab.Text = "Splash";
             // 
-            // Host2ComboBox
+            // label9
             // 
-            this.Host2ComboBox.ForeColor = System.Drawing.Color.Black;
-            this.Host2ComboBox.FormattingEnabled = true;
-            this.Host2ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
-            this.Host2ComboBox.Location = new System.Drawing.Point(73, 51);
-            this.Host2ComboBox.Name = "Host2ComboBox";
-            this.Host2ComboBox.Size = new System.Drawing.Size(176, 21);
-            this.Host2ComboBox.TabIndex = 8;
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.Black;
+            this.label9.Location = new System.Drawing.Point(18, 68);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Bottom";
             // 
-            // label5
+            // label8
             // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(21, 136);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Guest 1";
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.Black;
+            this.label8.Location = new System.Drawing.Point(18, 11);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Top";
             // 
-            // label3
+            // splashBottomBox
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(21, 82);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Host 3";
+            this.splashBottomBox.Location = new System.Drawing.Point(21, 84);
+            this.splashBottomBox.Name = "splashBottomBox";
+            this.splashBottomBox.Size = new System.Drawing.Size(630, 20);
+            this.splashBottomBox.TabIndex = 1;
             // 
-            // Host4ComboBox
+            // splashTopBox
             // 
-            this.Host4ComboBox.ForeColor = System.Drawing.Color.Black;
-            this.Host4ComboBox.FormattingEnabled = true;
-            this.Host4ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
-            this.Host4ComboBox.Location = new System.Drawing.Point(73, 105);
-            this.Host4ComboBox.Name = "Host4ComboBox";
-            this.Host4ComboBox.Size = new System.Drawing.Size(176, 21);
-            this.Host4ComboBox.TabIndex = 11;
-            // 
-            // Host3ComboBox
-            // 
-            this.Host3ComboBox.ForeColor = System.Drawing.Color.Black;
-            this.Host3ComboBox.FormattingEnabled = true;
-            this.Host3ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
-            this.Host3ComboBox.Location = new System.Drawing.Point(73, 78);
-            this.Host3ComboBox.Name = "Host3ComboBox";
-            this.Host3ComboBox.Size = new System.Drawing.Size(176, 21);
-            this.Host3ComboBox.TabIndex = 9;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(21, 109);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 13);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Host 4";
+            this.splashTopBox.Location = new System.Drawing.Point(21, 27);
+            this.splashTopBox.Name = "splashTopBox";
+            this.splashTopBox.Size = new System.Drawing.Size(630, 20);
+            this.splashTopBox.TabIndex = 0;
             // 
             // questionsTab
             // 
@@ -657,57 +604,206 @@
             this.twitchGetQuestionsButton.UseVisualStyleBackColor = false;
             this.twitchGetQuestionsButton.Click += new System.EventHandler(this.twitchGetQuestionsButton_Click);
             // 
-            // splashTab
+            // castersTab
             // 
-            this.splashTab.BackColor = System.Drawing.Color.DarkGray;
-            this.splashTab.Controls.Add(this.label9);
-            this.splashTab.Controls.Add(this.label8);
-            this.splashTab.Controls.Add(this.splashBottomBox);
-            this.splashTab.Controls.Add(this.splashTopBox);
-            this.splashTab.Location = new System.Drawing.Point(4, 22);
-            this.splashTab.Name = "splashTab";
-            this.splashTab.Padding = new System.Windows.Forms.Padding(3);
-            this.splashTab.Size = new System.Drawing.Size(1118, 474);
-            this.splashTab.TabIndex = 4;
-            this.splashTab.Text = "Splash";
+            this.castersTab.BackColor = System.Drawing.Color.DarkGray;
+            this.castersTab.Controls.Add(this.groupBox1);
+            this.castersTab.Location = new System.Drawing.Point(4, 22);
+            this.castersTab.Name = "castersTab";
+            this.castersTab.Padding = new System.Windows.Forms.Padding(3);
+            this.castersTab.Size = new System.Drawing.Size(1118, 474);
+            this.castersTab.TabIndex = 0;
+            this.castersTab.Text = "Hosts & Guests";
             // 
-            // label9
+            // groupBox1
             // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(18, 68);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(40, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Bottom";
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.Guest2ComboBox);
+            this.groupBox1.Controls.Add(this.Host1ComboBox);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.Guest1ComboBox);
+            this.groupBox1.Controls.Add(this.Host2ComboBox);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.Host4ComboBox);
+            this.groupBox1.Controls.Add(this.Host3ComboBox);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.ForeColor = System.Drawing.Color.Black;
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(262, 192);
+            this.groupBox1.TabIndex = 20;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Names";
             // 
-            // label8
+            // label1
             // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(18, 11);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Top";
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(21, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Host 1";
             // 
-            // splashBottomBox
+            // Guest2ComboBox
             // 
-            this.splashBottomBox.Location = new System.Drawing.Point(21, 84);
-            this.splashBottomBox.Name = "splashBottomBox";
-            this.splashBottomBox.Size = new System.Drawing.Size(630, 20);
-            this.splashBottomBox.TabIndex = 1;
+            this.Guest2ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Guest2ComboBox.FormattingEnabled = true;
+            this.Guest2ComboBox.Items.AddRange(new object[] {
+            "STEPH MORRISON",
+            "EVAN MORRISON",
+            "TY TREMBLAY",
+            "DAVID McLAUGHLIN",
+            "FRANCIS O\'ROURKE",
+            "NAVID SHAFA"});
+            this.Guest2ComboBox.Location = new System.Drawing.Point(73, 159);
+            this.Guest2ComboBox.Name = "Guest2ComboBox";
+            this.Guest2ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Guest2ComboBox.TabIndex = 18;
             // 
-            // splashTopBox
+            // Host1ComboBox
             // 
-            this.splashTopBox.Location = new System.Drawing.Point(21, 27);
-            this.splashTopBox.Name = "splashTopBox";
-            this.splashTopBox.Size = new System.Drawing.Size(630, 20);
-            this.splashTopBox.TabIndex = 0;
+            this.Host1ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Host1ComboBox.FormattingEnabled = true;
+            this.Host1ComboBox.Items.AddRange(new object[] {
+            "STEPH MORRISON",
+            "EVAN MORRISON",
+            "TY TREMBLAY",
+            "DAVID McLAUGHLIN",
+            "FRANCIS O\'ROURKE",
+            "NAVID SHAFA"});
+            this.Host1ComboBox.Location = new System.Drawing.Point(73, 24);
+            this.Host1ComboBox.Name = "Host1ComboBox";
+            this.Host1ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Host1ComboBox.TabIndex = 7;
             // 
-            // backgroundWorker1
+            // label6
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(21, 163);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Guest 2";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(21, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Host 2";
+            // 
+            // Guest1ComboBox
+            // 
+            this.Guest1ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Guest1ComboBox.FormattingEnabled = true;
+            this.Guest1ComboBox.Items.AddRange(new object[] {
+            "STEPH MORRISON",
+            "EVAN MORRISON",
+            "TY TREMBLAY",
+            "DAVID McLAUGHLIN",
+            "FRANCIS O\'ROURKE",
+            "NAVID SHAFA"});
+            this.Guest1ComboBox.Location = new System.Drawing.Point(73, 132);
+            this.Guest1ComboBox.Name = "Guest1ComboBox";
+            this.Guest1ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Guest1ComboBox.TabIndex = 13;
+            // 
+            // Host2ComboBox
+            // 
+            this.Host2ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Host2ComboBox.FormattingEnabled = true;
+            this.Host2ComboBox.Items.AddRange(new object[] {
+            "STEPH MORRISON",
+            "EVAN MORRISON",
+            "TY TREMBLAY",
+            "DAVID McLAUGHLIN",
+            "FRANCIS O\'ROURKE",
+            "NAVID SHAFA"});
+            this.Host2ComboBox.Location = new System.Drawing.Point(73, 51);
+            this.Host2ComboBox.Name = "Host2ComboBox";
+            this.Host2ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Host2ComboBox.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(21, 136);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Guest 1";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(21, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Host 3";
+            // 
+            // Host4ComboBox
+            // 
+            this.Host4ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Host4ComboBox.FormattingEnabled = true;
+            this.Host4ComboBox.Items.AddRange(new object[] {
+            "STEPH MORRISON",
+            "EVAN MORRISON",
+            "TY TREMBLAY",
+            "DAVID McLAUGHLIN",
+            "FRANCIS O\'ROURKE",
+            "NAVID SHAFA"});
+            this.Host4ComboBox.Location = new System.Drawing.Point(73, 105);
+            this.Host4ComboBox.Name = "Host4ComboBox";
+            this.Host4ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Host4ComboBox.TabIndex = 11;
+            // 
+            // Host3ComboBox
+            // 
+            this.Host3ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Host3ComboBox.FormattingEnabled = true;
+            this.Host3ComboBox.Items.AddRange(new object[] {
+            "STEPH MORRISON",
+            "EVAN MORRISON",
+            "TY TREMBLAY",
+            "DAVID McLAUGHLIN",
+            "FRANCIS O\'ROURKE",
+            "NAVID SHAFA"});
+            this.Host3ComboBox.Location = new System.Drawing.Point(73, 78);
+            this.Host3ComboBox.Name = "Host3ComboBox";
+            this.Host3ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Host3ComboBox.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(21, 109);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Host 4";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.castersTab);
+            this.tabControl1.Controls.Add(this.questionsTab);
+            this.tabControl1.Controls.Add(this.splashTab);
+            this.tabControl1.Controls.Add(this.tickerTab);
+            this.tabControl1.Location = new System.Drawing.Point(151, 71);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1126, 500);
+            this.tabControl1.TabIndex = 7;
             // 
             // Form1
             // 
@@ -732,10 +828,10 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.verticalTickerDataGridView)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.castersTab.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.tickerTab.ResumeLayout(false);
+            this.tickerTab.PerformLayout();
+            this.splashTab.ResumeLayout(false);
+            this.splashTab.PerformLayout();
             this.questionsTab.ResumeLayout(false);
             this.questionsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
@@ -743,8 +839,10 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
-            this.splashTab.ResumeLayout(false);
-            this.splashTab.PerformLayout();
+            this.castersTab.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -763,21 +861,15 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage castersTab;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox Guest2ComboBox;
-        private System.Windows.Forms.ComboBox Host1ComboBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox Guest1ComboBox;
-        private System.Windows.Forms.ComboBox Host2ComboBox;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox Host4ComboBox;
-        private System.Windows.Forms.ComboBox Host3ComboBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn topics;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TabPage tickerTab;
+        private System.Windows.Forms.TabPage splashTab;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox splashBottomBox;
+        private System.Windows.Forms.TextBox splashTopBox;
         private System.Windows.Forms.TabPage questionsTab;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -792,13 +884,27 @@
         private System.Windows.Forms.Button twitterGetQuestionsButton;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button twitchGetQuestionsButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn topics;
-        private System.Windows.Forms.TabPage splashTab;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox splashBottomBox;
-        private System.Windows.Forms.TextBox splashTopBox;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.TabPage castersTab;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox Guest2ComboBox;
+        private System.Windows.Forms.ComboBox Host1ComboBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox Guest1ComboBox;
+        private System.Windows.Forms.ComboBox Host2ComboBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox Host4ComboBox;
+        private System.Windows.Forms.ComboBox Host3ComboBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox tickerTextBox;
+        private System.Windows.Forms.Button lastWeeksResultsButton;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox dateTextBox;
+        private System.Windows.Forms.Button nextWeeksResultsButton;
     }
 }
 

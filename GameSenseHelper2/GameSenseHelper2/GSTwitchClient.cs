@@ -76,7 +76,7 @@ namespace GameSenseHelper2
         {
             Console.WriteLine("Connected.");
             status = "Connected";
-            irc.Login("GameSenseBot", "GameSense Bot", 0, "GameSenseBot", oauth);
+            irc.Login("GameSenseHelper2", "GameSense Bot", 0, "GameSenseHelper2", oauth);
             irc.RfcJoin(channel);
         }
 

@@ -212,7 +212,7 @@ namespace GameSenseHelper2
         {
             xsHandler.loadTagsFromXML();
 
-            xsHandler.changeXMLTag("splashTop", splashBottomBox.Text, false);
+            xsHandler.changeXMLTag("splashTop", splashTopBox.Text, false);
             xsHandler.changeXMLTag("splashBottom", splashBottomBox.Text, false);
 
             xsHandler.writeXMLFile();
@@ -575,7 +575,7 @@ namespace GameSenseHelper2
                 else
                 {
                     worker.ReportProgress(0);
-                    Thread.Sleep(100);
+                    Thread.Sleep(1000);
                 }
             }
         }
@@ -593,6 +593,15 @@ namespace GameSenseHelper2
                 }
                 twitch.QuestionsList.Clear();
             }
+
+            String currentTime = DateTime.Now.ToString("HH:mm") + " PT";
+            String currentDate = DateTime.Now.ToString("MM/dd/yy");
+
+            xsHandler.loadTagsFromXML();
+
+            xsHandler.changeXMLTag("timeDate", currentTime + " " + currentDate, false);
+
+            xsHandler.writeXMLFile();
         }
 
         private void dataTable1_RowChanged(object sender, DataRowChangeEventArgs e)
@@ -793,6 +802,20 @@ namespace GameSenseHelper2
             {
                 verticalTickerDataGridView.Rows.RemoveAt(selectedCell.RowIndex);
             }
+        }
+
+        private void clearQuestionButton_Click_1(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PublishedAuthor = "";
+            Properties.Settings.Default.PublishedQuestion = "";
+            Properties.Settings.Default.Save();
+
+            xsHandler.loadTagsFromXML();
+
+            xsHandler.changeXMLTag("question", Properties.Settings.Default.PublishedQuestion, true);
+            xsHandler.changeXMLTag("author", Properties.Settings.Default.PublishedAuthor, true);
+
+            xsHandler.writeXMLFile();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace GameSenseHelper2
         private string server = "irc.twitch.tv";
         private int port = 6667;
         private string channel = "#frcgamesense";
-        private string oauth = "oauth:3m63uo712mbw62271j7y0czsu549hri";
+        private string oauth = "oauth:88tsavidk4h9u7o9pn3vzitqbmbtfb";
         private List<string[]> questions = new List<string[]>();
         private GSBotCommands messageCommands = new GSBotCommands();
         public static Thread twitchThread;
@@ -76,7 +76,7 @@ namespace GameSenseHelper2
         {
             Console.WriteLine("Connected.");
             status = "Connected";
-            irc.Login("GameSenseHelper2", "GameSense Bot", 0, "GameSenseHelper2", oauth);
+            irc.Login("gamesensebot", "GameSense Bot", 0, "gamesensebot", oauth);
             irc.RfcJoin(channel);
         }
 

@@ -500,6 +500,7 @@
             this.clearQuestionButton.TabIndex = 0;
             this.clearQuestionButton.Text = "Clear Question from Screen";
             this.clearQuestionButton.UseVisualStyleBackColor = false;
+            this.clearQuestionButton.Click += new System.EventHandler(this.clearQuestionButton_Click_1);
             // 
             // clearQuestionsButton
             // 

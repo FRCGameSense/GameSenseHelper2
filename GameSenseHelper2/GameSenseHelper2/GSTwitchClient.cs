@@ -14,7 +14,7 @@ namespace GameSenseHelper2
         private string server = "irc.twitch.tv";
         private int port = 6667;
         private string channel = "#frcgamesense";
-        private string oauth = "oauth:88tsavidk4h9u7o9pn3vzitqbmbtfb";
+        private string oauth = "oauth:060e3h8ki99kxkfstsjyskwqc6k0s4";
         private List<string[]> questions = new List<string[]>();
         private GSBotCommands messageCommands = new GSBotCommands();
         public static Thread twitchThread;

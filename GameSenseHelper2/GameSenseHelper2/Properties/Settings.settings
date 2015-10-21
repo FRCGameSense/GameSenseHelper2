@@ -6,7 +6,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="XsplitInstallLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files (x86)\SplitmediaLabs\XSplit</Value>
+      <Value Profile="(Default)">C:\Program Files (x86)\SplitmediaLabs\XSplitBroadcaster</Value>
     </Setting>
     <Setting Name="GSFolderLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

@@ -41,6 +41,7 @@ namespace GameSenseHelper2
         {
             Properties.Settings.Default.XsplitInstallLocation = settingsXsplitLocationBox.Text;
             Properties.Settings.Default.GSFolderLocation = settingsBTLFolderLocationBox.Text;
+            Properties.Settings.Default.chatLogsLocation = chatLogsLocationBox.Text;
             Properties.Settings.Default.Save();
             this.Close();          
         }
@@ -49,6 +50,7 @@ namespace GameSenseHelper2
         {
             settingsXsplitLocationBox.Text = Properties.Settings.Default.XsplitInstallLocation;
             settingsBTLFolderLocationBox.Text = Properties.Settings.Default.GSFolderLocation;
+            chatLogsLocationBox.Text = Properties.Settings.Default.chatLogsLocation;
             if (Properties.Settings.Default.twitterVerified)
             {
                 twitterConnectbutton.Enabled = false;
@@ -63,7 +65,7 @@ namespace GameSenseHelper2
 
         private void settingsOverlaysBrowseButton_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.Description = "Select the location of the Chezy Champs folder.";
+            folderBrowserDialog1.Description = "Select the location of the GameSense folder.";
             folderBrowserDialog1.ShowNewFolderButton = false;
 
             // Show the FolderBrowserDialog.
@@ -71,6 +73,19 @@ namespace GameSenseHelper2
             if (result == DialogResult.OK)
             {
                 settingsBTLFolderLocationBox.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void chatLogsBrowseButton_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.Description = "Select the location of the where to save chat logs.";
+            folderBrowserDialog1.ShowNewFolderButton = false;
+
+            // Show the FolderBrowserDialog.
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                chatLogsLocationBox.Text = folderBrowserDialog1.SelectedPath;
             }
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Meebey.SmartIrc4net;
 using System.Threading;
+using System.IO;
 
 namespace GameSenseHelper2
 {
@@ -14,11 +15,12 @@ namespace GameSenseHelper2
         private string server = "irc.twitch.tv";
         private int port = 6667;
         private string channel = "#frcgamesense";
-        private string oauth = "oauth:060e3h8ki99kxkfstsjyskwqc6k0s4";
+        private string oauth = "oauth:okk6abkz2i5aki134rfwpz0nf7t6ql";//"oauth:060e3h8ki99kxkfstsjyskwqc6k0s4";
         private List<string[]> questions = new List<string[]>();
         private GSBotCommands messageCommands = new GSBotCommands();
         public static Thread twitchThread;
         private string status;
+        private string currentLogPath;
 
         public string Status
         {
@@ -111,6 +113,7 @@ namespace GameSenseHelper2
         void SendChannelMessage(string message)
         {
             irc.SendMessage(SendType.Message, channel, message, Priority.BelowMedium);
+            logMessage(message, "gamesensebot", DateTime.Now);
         }
 
         /// <summary>
@@ -126,6 +129,7 @@ namespace GameSenseHelper2
             //pull the message out of the object for ease of use
             string rawMessage = e.Data.Message;
 
+            logMessage(e.Data.Message, e.Data.Nick, DateTime.Now);
 
             if (rawMessage.StartsWith("!"))
             {
@@ -152,6 +156,12 @@ namespace GameSenseHelper2
         {
             SendChannelMessage(nick + ", there was an error processing \"" + badCommand + "\": " + error);
             return;
+        }
+
+        private void logMessage(string msg, string nick, DateTime timeStamp)
+        {
+            string logLine = timeStamp.ToString("yyyy-MM-dd HH:mm:ss") + " [" + nick + "] " + msg + Environment.NewLine;
+            File.AppendAllText(currentLogPath, logLine);
         }
 
         /// <summary>
@@ -201,6 +211,28 @@ namespace GameSenseHelper2
         {
             int teamNum;
             return int.TryParse(str, out teamNum);
+        }
+
+
+        /// <summary>
+        /// Creates a log file with the given timestamp
+        /// </summary>
+        /// <param name="logLocPath">The folder to create the log file in.</param>
+        /// <param name="startTime">When the log file was created.</param>
+        /// <returns></returns>
+        public string CreateChatLogFile(string logLocPath, DateTime startTime)
+        {
+            string fileName = "GameSenseChatLog_" + startTime.ToString("yyyyMMddHHmmss") + ".log";
+            string[] startLines = {"======= GameSense Chat Log =======",""};
+            string fullPath = Path.Combine(logLocPath, fileName);
+
+            File.WriteAllLines(fullPath, startLines);            
+
+            this.currentLogPath = fullPath;
+
+            logMessage("Starting Log", "GameSenseHelper", startTime);
+
+            return fullPath;
         }
     }
 }

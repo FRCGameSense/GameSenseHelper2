@@ -549,6 +549,7 @@ namespace GameSenseHelper2
             if (twitchGetQuestionsButton.Text == "Start Getting Questions")
             {
                 twitch = new GSTwitchClient("#frcgamesense");
+                twitch.CreateChatLogFile(Properties.Settings.Default.chatLogsLocation, DateTime.Now);
                 twitch.Connect();
                 twitch.Listen();
                 backgroundWorker1.RunWorkerAsync();

@@ -49,6 +49,9 @@
             this.otherTab = new System.Windows.Forms.TabPage();
             this.enableResetCheckBox = new System.Windows.Forms.CheckBox();
             this.resetSettingsButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chatLogBrowseButton = new System.Windows.Forms.Button();
+            this.chatLogsLocationBox = new System.Windows.Forms.TextBox();
             this.filesTab.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.twitterTab.SuspendLayout();
@@ -89,8 +92,11 @@
             // 
             this.filesTab.Controls.Add(this.label1);
             this.filesTab.Controls.Add(this.settingsXsplitLocationBox);
+            this.filesTab.Controls.Add(this.chatLogsLocationBox);
+            this.filesTab.Controls.Add(this.chatLogBrowseButton);
             this.filesTab.Controls.Add(this.settingsBTLFolderLocationBox);
             this.filesTab.Controls.Add(this.settingsBTLFolderBrowseButton);
+            this.filesTab.Controls.Add(this.label3);
             this.filesTab.Controls.Add(this.settingsXsplitBrowseButton);
             this.filesTab.Controls.Add(this.label2);
             this.filesTab.Location = new System.Drawing.Point(4, 22);
@@ -250,6 +256,32 @@
             this.resetSettingsButton.UseVisualStyleBackColor = true;
             this.resetSettingsButton.Click += new System.EventHandler(this.resetSettingsButton_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 108);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(99, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Chat Logs Location";
+            // 
+            // chatLogBrowseButton
+            // 
+            this.chatLogBrowseButton.Location = new System.Drawing.Point(345, 125);
+            this.chatLogBrowseButton.Name = "chatLogBrowseButton";
+            this.chatLogBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.chatLogBrowseButton.TabIndex = 7;
+            this.chatLogBrowseButton.Text = "Browse";
+            this.chatLogBrowseButton.UseVisualStyleBackColor = true;
+            this.chatLogBrowseButton.Click += new System.EventHandler(this.chatLogsBrowseButton_Click);
+            // 
+            // chatLogsLocationBox
+            // 
+            this.chatLogsLocationBox.Location = new System.Drawing.Point(6, 127);
+            this.chatLogsLocationBox.Name = "chatLogsLocationBox";
+            this.chatLogsLocationBox.Size = new System.Drawing.Size(333, 20);
+            this.chatLogsLocationBox.TabIndex = 5;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -295,5 +327,8 @@
         private System.Windows.Forms.TabPage otherTab;
         private System.Windows.Forms.Button resetSettingsButton;
         private System.Windows.Forms.CheckBox enableResetCheckBox;
+        private System.Windows.Forms.TextBox chatLogsLocationBox;
+        private System.Windows.Forms.Button chatLogBrowseButton;
+        private System.Windows.Forms.Label label3;
     }
 }

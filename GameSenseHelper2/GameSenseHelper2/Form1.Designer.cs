@@ -92,6 +92,8 @@
             this.Host3ComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.showTopicBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.verticalTickerDataGridView)).BeginInit();
             this.tickerTab.SuspendLayout();
@@ -608,6 +610,8 @@
             // castersTab
             // 
             this.castersTab.BackColor = System.Drawing.Color.DarkGray;
+            this.castersTab.Controls.Add(this.label14);
+            this.castersTab.Controls.Add(this.showTopicBox);
             this.castersTab.Controls.Add(this.groupBox1);
             this.castersTab.Location = new System.Drawing.Point(4, 22);
             this.castersTab.Name = "castersTab";
@@ -806,6 +810,23 @@
             this.tabControl1.Size = new System.Drawing.Size(1126, 500);
             this.tabControl1.TabIndex = 7;
             // 
+            // showTopicBox
+            // 
+            this.showTopicBox.Location = new System.Drawing.Point(295, 34);
+            this.showTopicBox.Name = "showTopicBox";
+            this.showTopicBox.Size = new System.Drawing.Size(270, 20);
+            this.showTopicBox.TabIndex = 0;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(292, 18);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(64, 13);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "Show Topic";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -841,6 +862,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.castersTab.ResumeLayout(false);
+            this.castersTab.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -906,6 +928,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox dateTextBox;
         private System.Windows.Forms.Button nextWeeksResultsButton;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox showTopicBox;
     }
 }
 

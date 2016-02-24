@@ -248,7 +248,7 @@ namespace GameSenseHelper2
             Properties.Settings.Default.Host4 = Host4ComboBox.Text;
             Properties.Settings.Default.Guest1 = Guest1ComboBox.Text;
             Properties.Settings.Default.Guest2 = Guest2ComboBox.Text;
-
+            Properties.Settings.Default.showTopic = showTopicBox.Text;
 
             Properties.Settings.Default.Save();
 
@@ -260,6 +260,7 @@ namespace GameSenseHelper2
             xsHandler.changeXMLTag("host4", Properties.Settings.Default.Host4, true);
             xsHandler.changeXMLTag("guest1", Properties.Settings.Default.Guest1, true);
             xsHandler.changeXMLTag("guest2", Properties.Settings.Default.Guest2, true);
+            xsHandler.changeXMLTag("showTopic", Properties.Settings.Default.showTopic, true);
 
             xsHandler.writeXMLFile();
         }

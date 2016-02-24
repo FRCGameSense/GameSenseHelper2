@@ -274,5 +274,17 @@ namespace GameSenseHelper2.Properties {
                 this["chatLogsLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string showTopic {
+            get {
+                return ((string)(this["showTopic"]));
+            }
+            set {
+                this["showTopic"] = value;
+            }
+        }
     }
 }

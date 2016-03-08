@@ -78,6 +78,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.twitchGetQuestionsButton = new System.Windows.Forms.Button();
             this.castersTab = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.showTopicBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Guest2ComboBox = new System.Windows.Forms.ComboBox();
@@ -92,8 +94,6 @@
             this.Host3ComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.showTopicBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.verticalTickerDataGridView)).BeginInit();
             this.tickerTab.SuspendLayout();
@@ -620,6 +620,23 @@
             this.castersTab.TabIndex = 0;
             this.castersTab.Text = "Hosts & Guests";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(292, 18);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(64, 13);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "Show Topic";
+            // 
+            // showTopicBox
+            // 
+            this.showTopicBox.Location = new System.Drawing.Point(295, 34);
+            this.showTopicBox.Name = "showTopicBox";
+            this.showTopicBox.Size = new System.Drawing.Size(270, 20);
+            this.showTopicBox.TabIndex = 0;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
@@ -676,9 +693,9 @@
             "STEPH MORRISON",
             "EVAN MORRISON",
             "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
             "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
+            "NAVID SHAFA",
+            "RUTH TOOMEY"});
             this.Host1ComboBox.Location = new System.Drawing.Point(73, 24);
             this.Host1ComboBox.Name = "Host1ComboBox";
             this.Host1ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -728,9 +745,9 @@
             "STEPH MORRISON",
             "EVAN MORRISON",
             "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
             "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
+            "NAVID SHAFA",
+            "RUTH TOOMEY"});
             this.Host2ComboBox.Location = new System.Drawing.Point(73, 51);
             this.Host2ComboBox.Name = "Host2ComboBox";
             this.Host2ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -764,9 +781,9 @@
             "STEPH MORRISON",
             "EVAN MORRISON",
             "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
             "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
+            "NAVID SHAFA",
+            "RUTH TOOMEY"});
             this.Host4ComboBox.Location = new System.Drawing.Point(73, 105);
             this.Host4ComboBox.Name = "Host4ComboBox";
             this.Host4ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -780,9 +797,9 @@
             "STEPH MORRISON",
             "EVAN MORRISON",
             "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
             "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
+            "NAVID SHAFA",
+            "RUTH TOOMEY"});
             this.Host3ComboBox.Location = new System.Drawing.Point(73, 78);
             this.Host3ComboBox.Name = "Host3ComboBox";
             this.Host3ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -809,23 +826,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1126, 500);
             this.tabControl1.TabIndex = 7;
-            // 
-            // showTopicBox
-            // 
-            this.showTopicBox.Location = new System.Drawing.Point(295, 34);
-            this.showTopicBox.Name = "showTopicBox";
-            this.showTopicBox.Size = new System.Drawing.Size(270, 20);
-            this.showTopicBox.TabIndex = 0;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(292, 18);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(64, 13);
-            this.label14.TabIndex = 10;
-            this.label14.Text = "Show Topic";
             // 
             // Form1
             // 

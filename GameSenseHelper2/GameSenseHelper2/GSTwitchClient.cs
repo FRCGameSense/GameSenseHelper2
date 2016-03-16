@@ -12,7 +12,7 @@ namespace GameSenseHelper2
     class GSTwitchClient
     {
         private IrcClient irc = new IrcClient();
-        private string server = "irc.twitch.tv";
+        private string server = "irc.chat.twitch.tv";
         private int port = 6667;
         private string channel = "#frcgamesense";
         private string oauth = "oauth:okk6abkz2i5aki134rfwpz0nf7t6ql";//"oauth:060e3h8ki99kxkfstsjyskwqc6k0s4";

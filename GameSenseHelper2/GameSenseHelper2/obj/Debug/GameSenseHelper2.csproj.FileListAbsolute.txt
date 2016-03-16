@@ -38,3 +38,6 @@ C:\Users\ttremblay\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseH
 C:\Users\ttremblay\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseHelper2\obj\Debug\GameSenseHelper2.Properties.Resources.resources
 C:\Users\ttremblay\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseHelper2\obj\Debug\GameSenseHelper2.SettingsForm.resources
 C:\Users\ttremblay\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseHelper2\obj\Debug\GameSenseHelper2.csproj.GenerateResource.Cache
+C:\Users\Ty\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseHelper2\bin\Debug\GameSenseHelper2.exe.config
+C:\Users\Ty\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseHelper2\obj\Debug\GameSenseHelper2.exe
+C:\Users\Ty\Documents\GitHub\GameSenseHelper2\GameSenseHelper2\GameSenseHelper2\obj\Debug\GameSenseHelper2.pdb

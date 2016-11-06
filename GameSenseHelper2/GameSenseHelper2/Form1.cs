@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace GameSenseHelper2
 {
@@ -298,7 +299,30 @@ namespace GameSenseHelper2
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
+            DialogResult r = settingsForm.ShowDialog();
+            if (r == DialogResult.OK)
+            {
+                string[] hosts = new string[Properties.Settings.Default.defaultHosts.Count];
+                Properties.Settings.Default.defaultHosts.CopyTo(hosts,0);
+                string[] guests = new string[Properties.Settings.Default.defaultGuests.Count];
+                Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+
+                Host1ComboBox.Items.Clear();
+                Host2ComboBox.Items.Clear();
+                Host3ComboBox.Items.Clear();
+                Host4ComboBox.Items.Clear();
+                Guest1ComboBox.Items.Clear();
+                Guest2ComboBox.Items.Clear();
+
+                Host1ComboBox.Items.AddRange(hosts);
+                Host2ComboBox.Items.AddRange(hosts);
+                Host3ComboBox.Items.AddRange(hosts);
+                Host4ComboBox.Items.AddRange(hosts);
+                Guest1ComboBox.Items.AddRange(guests);
+                Guest2ComboBox.Items.AddRange(guests);
+
+
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)

@@ -36,8 +36,11 @@
             this.filesTab = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.settingsXsplitLocationBox = new System.Windows.Forms.TextBox();
+            this.chatLogsLocationBox = new System.Windows.Forms.TextBox();
+            this.chatLogBrowseButton = new System.Windows.Forms.Button();
             this.settingsBTLFolderLocationBox = new System.Windows.Forms.TextBox();
             this.settingsBTLFolderBrowseButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.settingsXsplitBrowseButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -49,13 +52,16 @@
             this.otherTab = new System.Windows.Forms.TabPage();
             this.enableResetCheckBox = new System.Windows.Forms.CheckBox();
             this.resetSettingsButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.chatLogBrowseButton = new System.Windows.Forms.Button();
-            this.chatLogsLocationBox = new System.Windows.Forms.TextBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.defaultHostsBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.defaultGuestsBox = new System.Windows.Forms.TextBox();
             this.filesTab.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.twitterTab.SuspendLayout();
             this.otherTab.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // settingsSaveButton
@@ -122,6 +128,23 @@
             this.settingsXsplitLocationBox.Size = new System.Drawing.Size(333, 20);
             this.settingsXsplitLocationBox.TabIndex = 2;
             // 
+            // chatLogsLocationBox
+            // 
+            this.chatLogsLocationBox.Location = new System.Drawing.Point(6, 127);
+            this.chatLogsLocationBox.Name = "chatLogsLocationBox";
+            this.chatLogsLocationBox.Size = new System.Drawing.Size(333, 20);
+            this.chatLogsLocationBox.TabIndex = 5;
+            // 
+            // chatLogBrowseButton
+            // 
+            this.chatLogBrowseButton.Location = new System.Drawing.Point(345, 125);
+            this.chatLogBrowseButton.Name = "chatLogBrowseButton";
+            this.chatLogBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.chatLogBrowseButton.TabIndex = 7;
+            this.chatLogBrowseButton.Text = "Browse";
+            this.chatLogBrowseButton.UseVisualStyleBackColor = true;
+            this.chatLogBrowseButton.Click += new System.EventHandler(this.chatLogsBrowseButton_Click);
+            // 
             // settingsBTLFolderLocationBox
             // 
             this.settingsBTLFolderLocationBox.Location = new System.Drawing.Point(8, 71);
@@ -138,6 +161,15 @@
             this.settingsBTLFolderBrowseButton.Text = "Browse";
             this.settingsBTLFolderBrowseButton.UseVisualStyleBackColor = true;
             this.settingsBTLFolderBrowseButton.Click += new System.EventHandler(this.settingsOverlaysBrowseButton_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 108);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(99, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Chat Logs Location";
             // 
             // settingsXsplitBrowseButton
             // 
@@ -161,6 +193,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.filesTab);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.twitterTab);
             this.tabControl1.Controls.Add(this.otherTab);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -256,31 +289,55 @@
             this.resetSettingsButton.UseVisualStyleBackColor = true;
             this.resetSettingsButton.Click += new System.EventHandler(this.resetSettingsButton_Click);
             // 
-            // label3
+            // tabPage1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 108);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(99, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Chat Logs Location";
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.defaultGuestsBox);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.defaultHostsBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(427, 318);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Hosts & Guests";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // chatLogBrowseButton
+            // defaultHostsBox
             // 
-            this.chatLogBrowseButton.Location = new System.Drawing.Point(345, 125);
-            this.chatLogBrowseButton.Name = "chatLogBrowseButton";
-            this.chatLogBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.chatLogBrowseButton.TabIndex = 7;
-            this.chatLogBrowseButton.Text = "Browse";
-            this.chatLogBrowseButton.UseVisualStyleBackColor = true;
-            this.chatLogBrowseButton.Click += new System.EventHandler(this.chatLogsBrowseButton_Click);
+            this.defaultHostsBox.AcceptsReturn = true;
+            this.defaultHostsBox.Location = new System.Drawing.Point(8, 24);
+            this.defaultHostsBox.Multiline = true;
+            this.defaultHostsBox.Name = "defaultHostsBox";
+            this.defaultHostsBox.Size = new System.Drawing.Size(158, 184);
+            this.defaultHostsBox.TabIndex = 0;
             // 
-            // chatLogsLocationBox
+            // label4
             // 
-            this.chatLogsLocationBox.Location = new System.Drawing.Point(6, 127);
-            this.chatLogsLocationBox.Name = "chatLogsLocationBox";
-            this.chatLogsLocationBox.Size = new System.Drawing.Size(333, 20);
-            this.chatLogsLocationBox.TabIndex = 5;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(135, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Default Hosts (one per line)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(202, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(141, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Default Guests (one per line)";
+            // 
+            // defaultGuestsBox
+            // 
+            this.defaultGuestsBox.AcceptsReturn = true;
+            this.defaultGuestsBox.Location = new System.Drawing.Point(202, 24);
+            this.defaultGuestsBox.Multiline = true;
+            this.defaultGuestsBox.Name = "defaultGuestsBox";
+            this.defaultGuestsBox.Size = new System.Drawing.Size(158, 184);
+            this.defaultGuestsBox.TabIndex = 5;
             // 
             // SettingsForm
             // 
@@ -300,6 +357,8 @@
             this.twitterTab.PerformLayout();
             this.otherTab.ResumeLayout(false);
             this.otherTab.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -330,5 +389,10 @@
         private System.Windows.Forms.TextBox chatLogsLocationBox;
         private System.Windows.Forms.Button chatLogBrowseButton;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox defaultGuestsBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox defaultHostsBox;
     }
 }

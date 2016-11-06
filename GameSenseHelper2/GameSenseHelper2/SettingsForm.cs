@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
-
+using System.Collections.Specialized;
 
 namespace GameSenseHelper2
 {
@@ -42,7 +42,14 @@ namespace GameSenseHelper2
             Properties.Settings.Default.XsplitInstallLocation = settingsXsplitLocationBox.Text;
             Properties.Settings.Default.GSFolderLocation = settingsBTLFolderLocationBox.Text;
             Properties.Settings.Default.chatLogsLocation = chatLogsLocationBox.Text;
+            StringCollection hosts = new StringCollection();
+            StringCollection guests = new StringCollection();
+            hosts.AddRange(defaultHostsBox.Text.Replace("\r", "").Split('\n'));
+            guests.AddRange(defaultGuestsBox.Text.Replace("\r", "").Split('\n'));
+            Properties.Settings.Default.defaultHosts = hosts;
+            Properties.Settings.Default.defaultGuests = guests;
             Properties.Settings.Default.Save();
+            this.DialogResult = DialogResult.OK;
             this.Close();          
         }
 
@@ -51,6 +58,15 @@ namespace GameSenseHelper2
             settingsXsplitLocationBox.Text = Properties.Settings.Default.XsplitInstallLocation;
             settingsBTLFolderLocationBox.Text = Properties.Settings.Default.GSFolderLocation;
             chatLogsLocationBox.Text = Properties.Settings.Default.chatLogsLocation;
+
+            string[] hosts = new string[Properties.Settings.Default.defaultHosts.Count];
+            Properties.Settings.Default.defaultHosts.CopyTo(hosts, 0);
+
+            string[] guests = new string[Properties.Settings.Default.defaultGuests.Count];
+            Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+
+            defaultHostsBox.Text = String.Join("\r\n", hosts);
+            defaultGuestsBox.Text = String.Join("\r\n", guests);
             if (Properties.Settings.Default.twitterVerified)
             {
                 twitterConnectbutton.Enabled = false;

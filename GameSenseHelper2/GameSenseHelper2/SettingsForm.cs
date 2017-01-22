@@ -44,10 +44,13 @@ namespace GameSenseHelper2
             Properties.Settings.Default.chatLogsLocation = chatLogsLocationBox.Text;
             StringCollection hosts = new StringCollection();
             StringCollection guests = new StringCollection();
+            StringCollection teams = new StringCollection();
             hosts.AddRange(defaultHostsBox.Text.Replace("\r", "").Split('\n'));
             guests.AddRange(defaultGuestsBox.Text.Replace("\r", "").Split('\n'));
+            teams.AddRange(defaultTeamsBox.Text.Replace("\r", "").Split('\n'));
             Properties.Settings.Default.defaultHosts = hosts;
             Properties.Settings.Default.defaultGuests = guests;
+            Properties.Settings.Default.defaultTeams = teams;
             Properties.Settings.Default.Save();
             this.DialogResult = DialogResult.OK;
             this.Close();          
@@ -58,15 +61,37 @@ namespace GameSenseHelper2
             settingsXsplitLocationBox.Text = Properties.Settings.Default.XsplitInstallLocation;
             settingsBTLFolderLocationBox.Text = Properties.Settings.Default.GSFolderLocation;
             chatLogsLocationBox.Text = Properties.Settings.Default.chatLogsLocation;
+            
+            string[] hosts = new string[0];
+            //Properties.Settings.Default.defaultHosts.CopyTo(hosts, 0);
 
-            string[] hosts = new string[Properties.Settings.Default.defaultHosts.Count];
-            Properties.Settings.Default.defaultHosts.CopyTo(hosts, 0);
+            if (Properties.Settings.Default.defaultHosts != null)
+            {
+                hosts = new string[Properties.Settings.Default.defaultHosts.Count];
+                Properties.Settings.Default.defaultHosts.CopyTo(hosts, 0);
+            }
 
-            string[] guests = new string[Properties.Settings.Default.defaultGuests.Count];
-            Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+            string[] guests = new string[0];
+            //Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+
+            if (Properties.Settings.Default.defaultGuests != null)
+            {
+                guests = new string[Properties.Settings.Default.defaultGuests.Count];
+                Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+            }
+
+            string[] teams = new string[0];
+            //Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+
+            if (Properties.Settings.Default.defaultTeams != null)
+            {
+                teams = new string[Properties.Settings.Default.defaultTeams.Count];
+                Properties.Settings.Default.defaultTeams.CopyTo(teams, 0);
+            }
 
             defaultHostsBox.Text = String.Join("\r\n", hosts);
             defaultGuestsBox.Text = String.Join("\r\n", guests);
+            defaultTeamsBox.Text = String.Join("\r\n", teams);
             if (Properties.Settings.Default.twitterVerified)
             {
                 twitterConnectbutton.Enabled = false;
@@ -167,7 +192,5 @@ namespace GameSenseHelper2
         {
             resetSettingsButton.Enabled = enableResetCheckBox.Checked;
         }
-
-
     }
 }

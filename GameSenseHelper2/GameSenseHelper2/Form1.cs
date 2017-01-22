@@ -103,10 +103,17 @@ namespace GameSenseHelper2
             //load these from settings
             Host1ComboBox.Text = Properties.Settings.Default.Host1;
             Host2ComboBox.Text = Properties.Settings.Default.Host2;
-            Guest1ComboBox.Text = Properties.Settings.Default.Guest1;
-            Guest2ComboBox.Text = Properties.Settings.Default.Guest2;
             Host3ComboBox.Text = Properties.Settings.Default.Host3;
             Host4ComboBox.Text = Properties.Settings.Default.Host4;
+            Guest1ComboBox.Text = Properties.Settings.Default.Guest1;
+            Guest2ComboBox.Text = Properties.Settings.Default.Guest2;
+
+            Team1ComboBox.Text = Properties.Settings.Default.team1;
+            Team2ComboBox.Text = Properties.Settings.Default.team2;
+            Team3ComboBox.Text = Properties.Settings.Default.team3;
+            Team4ComboBox.Text = Properties.Settings.Default.team4;
+            Team5ComboBox.Text = Properties.Settings.Default.team5;
+            Team6ComboBox.Text = Properties.Settings.Default.team6;
 
             twitterHashtagBox.Text = Properties.Settings.Default.twitterSearchTag;
 
@@ -249,6 +256,14 @@ namespace GameSenseHelper2
             Properties.Settings.Default.Host4 = Host4ComboBox.Text;
             Properties.Settings.Default.Guest1 = Guest1ComboBox.Text;
             Properties.Settings.Default.Guest2 = Guest2ComboBox.Text;
+
+            Properties.Settings.Default.team1 = Team1ComboBox.Text;
+            Properties.Settings.Default.team2 = Team2ComboBox.Text;
+            Properties.Settings.Default.team3 = Team3ComboBox.Text;
+            Properties.Settings.Default.team4 = Team4ComboBox.Text;
+            Properties.Settings.Default.team5 = Team5ComboBox.Text;
+            Properties.Settings.Default.team6 = Team6ComboBox.Text;
+
             Properties.Settings.Default.showTopic = showTopicBox.Text;
 
             Properties.Settings.Default.Save();
@@ -261,6 +276,13 @@ namespace GameSenseHelper2
             xsHandler.changeXMLTag("host4", Properties.Settings.Default.Host4, true);
             xsHandler.changeXMLTag("guest1", Properties.Settings.Default.Guest1, true);
             xsHandler.changeXMLTag("guest2", Properties.Settings.Default.Guest2, true);
+            xsHandler.changeXMLTag("team", Properties.Settings.Default.team1, true);
+            xsHandler.changeXMLTag("team1", Properties.Settings.Default.team1, true);
+            xsHandler.changeXMLTag("team2", Properties.Settings.Default.team2, true);
+            xsHandler.changeXMLTag("team3", Properties.Settings.Default.team3, true);
+            xsHandler.changeXMLTag("team4", Properties.Settings.Default.team4, true);
+            xsHandler.changeXMLTag("team5", Properties.Settings.Default.team5, true);
+            xsHandler.changeXMLTag("team6", Properties.Settings.Default.team6, true);
             xsHandler.changeXMLTag("showTopic", Properties.Settings.Default.showTopic, true);
 
             xsHandler.writeXMLFile();
@@ -306,6 +328,8 @@ namespace GameSenseHelper2
                 Properties.Settings.Default.defaultHosts.CopyTo(hosts,0);
                 string[] guests = new string[Properties.Settings.Default.defaultGuests.Count];
                 Properties.Settings.Default.defaultGuests.CopyTo(guests, 0);
+                string[] teams = new string[Properties.Settings.Default.defaultTeams.Count];
+                Properties.Settings.Default.defaultTeams.CopyTo(teams, 0);
 
                 Host1ComboBox.Items.Clear();
                 Host2ComboBox.Items.Clear();
@@ -314,12 +338,29 @@ namespace GameSenseHelper2
                 Guest1ComboBox.Items.Clear();
                 Guest2ComboBox.Items.Clear();
 
+                Team1ComboBox.Items.Clear();
+                Team2ComboBox.Items.Clear();
+                Team3ComboBox.Items.Clear();
+                Team4ComboBox.Items.Clear();
+                Team5ComboBox.Items.Clear();
+                Team6ComboBox.Items.Clear();
+
+
                 Host1ComboBox.Items.AddRange(hosts);
                 Host2ComboBox.Items.AddRange(hosts);
                 Host3ComboBox.Items.AddRange(hosts);
                 Host4ComboBox.Items.AddRange(hosts);
                 Guest1ComboBox.Items.AddRange(guests);
                 Guest2ComboBox.Items.AddRange(guests);
+
+
+
+                Team1ComboBox.Items.AddRange(teams);
+                Team2ComboBox.Items.AddRange(teams);
+                Team3ComboBox.Items.AddRange(teams);
+                Team4ComboBox.Items.AddRange(teams);
+                Team5ComboBox.Items.AddRange(teams);
+                Team6ComboBox.Items.AddRange(teams);
 
 
             }

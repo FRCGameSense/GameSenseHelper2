@@ -44,6 +44,13 @@
             this.settingsXsplitBrowseButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.defaultTeamsBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.defaultGuestsBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.defaultHostsBox = new System.Windows.Forms.TextBox();
             this.twitterTab = new System.Windows.Forms.TabPage();
             this.twitterInstructionsLabel = new System.Windows.Forms.Label();
             this.twitterPinBox = new System.Windows.Forms.TextBox();
@@ -52,22 +59,17 @@
             this.otherTab = new System.Windows.Forms.TabPage();
             this.enableResetCheckBox = new System.Windows.Forms.CheckBox();
             this.resetSettingsButton = new System.Windows.Forms.Button();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.defaultHostsBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.defaultGuestsBox = new System.Windows.Forms.TextBox();
             this.filesTab.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.twitterTab.SuspendLayout();
             this.otherTab.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // settingsSaveButton
             // 
             this.settingsSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.settingsSaveButton.Location = new System.Drawing.Point(343, 350);
+            this.settingsSaveButton.Location = new System.Drawing.Point(371, 350);
             this.settingsSaveButton.Name = "settingsSaveButton";
             this.settingsSaveButton.Size = new System.Drawing.Size(75, 23);
             this.settingsSaveButton.TabIndex = 0;
@@ -78,7 +80,7 @@
             // settingsCancelButton
             // 
             this.settingsCancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.settingsCancelButton.Location = new System.Drawing.Point(262, 350);
+            this.settingsCancelButton.Location = new System.Drawing.Point(290, 350);
             this.settingsCancelButton.Name = "settingsCancelButton";
             this.settingsCancelButton.Size = new System.Drawing.Size(75, 23);
             this.settingsCancelButton.TabIndex = 1;
@@ -108,7 +110,7 @@
             this.filesTab.Location = new System.Drawing.Point(4, 22);
             this.filesTab.Name = "filesTab";
             this.filesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.filesTab.Size = new System.Drawing.Size(427, 318);
+            this.filesTab.Size = new System.Drawing.Size(452, 318);
             this.filesTab.TabIndex = 0;
             this.filesTab.Text = "Files / Folders";
             // 
@@ -199,8 +201,78 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(435, 344);
+            this.tabControl1.Size = new System.Drawing.Size(460, 344);
             this.tabControl1.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.defaultTeamsBox);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.defaultGuestsBox);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.defaultHostsBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(452, 318);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Hosts & Guests";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(299, 8);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(140, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Default Teams (one per line)";
+            // 
+            // defaultTeamsBox
+            // 
+            this.defaultTeamsBox.AcceptsReturn = true;
+            this.defaultTeamsBox.Location = new System.Drawing.Point(299, 24);
+            this.defaultTeamsBox.Multiline = true;
+            this.defaultTeamsBox.Name = "defaultTeamsBox";
+            this.defaultTeamsBox.Size = new System.Drawing.Size(141, 184);
+            this.defaultTeamsBox.TabIndex = 7;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(152, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(141, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Default Guests (one per line)";
+            // 
+            // defaultGuestsBox
+            // 
+            this.defaultGuestsBox.AcceptsReturn = true;
+            this.defaultGuestsBox.Location = new System.Drawing.Point(152, 24);
+            this.defaultGuestsBox.Multiline = true;
+            this.defaultGuestsBox.Name = "defaultGuestsBox";
+            this.defaultGuestsBox.Size = new System.Drawing.Size(141, 184);
+            this.defaultGuestsBox.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(135, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Default Hosts (one per line)";
+            // 
+            // defaultHostsBox
+            // 
+            this.defaultHostsBox.AcceptsReturn = true;
+            this.defaultHostsBox.Location = new System.Drawing.Point(8, 24);
+            this.defaultHostsBox.Multiline = true;
+            this.defaultHostsBox.Name = "defaultHostsBox";
+            this.defaultHostsBox.Size = new System.Drawing.Size(135, 184);
+            this.defaultHostsBox.TabIndex = 0;
             // 
             // twitterTab
             // 
@@ -211,7 +283,7 @@
             this.twitterTab.Location = new System.Drawing.Point(4, 22);
             this.twitterTab.Name = "twitterTab";
             this.twitterTab.Padding = new System.Windows.Forms.Padding(3);
-            this.twitterTab.Size = new System.Drawing.Size(427, 318);
+            this.twitterTab.Size = new System.Drawing.Size(452, 318);
             this.twitterTab.TabIndex = 1;
             this.twitterTab.Text = "Twitter";
             this.twitterTab.UseVisualStyleBackColor = true;
@@ -262,7 +334,7 @@
             this.otherTab.Location = new System.Drawing.Point(4, 22);
             this.otherTab.Name = "otherTab";
             this.otherTab.Padding = new System.Windows.Forms.Padding(3);
-            this.otherTab.Size = new System.Drawing.Size(427, 318);
+            this.otherTab.Size = new System.Drawing.Size(452, 318);
             this.otherTab.TabIndex = 2;
             this.otherTab.Text = "Other";
             this.otherTab.UseVisualStyleBackColor = true;
@@ -289,61 +361,11 @@
             this.resetSettingsButton.UseVisualStyleBackColor = true;
             this.resetSettingsButton.Click += new System.EventHandler(this.resetSettingsButton_Click);
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.defaultGuestsBox);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.defaultHostsBox);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(427, 318);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "Hosts & Guests";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // defaultHostsBox
-            // 
-            this.defaultHostsBox.AcceptsReturn = true;
-            this.defaultHostsBox.Location = new System.Drawing.Point(8, 24);
-            this.defaultHostsBox.Multiline = true;
-            this.defaultHostsBox.Name = "defaultHostsBox";
-            this.defaultHostsBox.Size = new System.Drawing.Size(158, 184);
-            this.defaultHostsBox.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 8);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(135, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Default Hosts (one per line)";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(202, 8);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(141, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Default Guests (one per line)";
-            // 
-            // defaultGuestsBox
-            // 
-            this.defaultGuestsBox.AcceptsReturn = true;
-            this.defaultGuestsBox.Location = new System.Drawing.Point(202, 24);
-            this.defaultGuestsBox.Multiline = true;
-            this.defaultGuestsBox.Name = "defaultGuestsBox";
-            this.defaultGuestsBox.Size = new System.Drawing.Size(158, 184);
-            this.defaultGuestsBox.TabIndex = 5;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(431, 385);
+            this.ClientSize = new System.Drawing.Size(459, 385);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.settingsCancelButton);
             this.Controls.Add(this.settingsSaveButton);
@@ -353,12 +375,12 @@
             this.filesTab.ResumeLayout(false);
             this.filesTab.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.twitterTab.ResumeLayout(false);
             this.twitterTab.PerformLayout();
             this.otherTab.ResumeLayout(false);
             this.otherTab.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -394,5 +416,7 @@
         private System.Windows.Forms.TextBox defaultGuestsBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox defaultHostsBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox defaultTeamsBox;
     }
 }

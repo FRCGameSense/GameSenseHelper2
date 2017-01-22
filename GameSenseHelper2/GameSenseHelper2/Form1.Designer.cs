@@ -78,6 +78,19 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.twitchGetQuestionsButton = new System.Windows.Forms.Button();
             this.castersTab = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.Team6ComboBox = new System.Windows.Forms.ComboBox();
+            this.Team1ComboBox = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.Team5ComboBox = new System.Windows.Forms.ComboBox();
+            this.Team2ComboBox = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.Team4ComboBox = new System.Windows.Forms.ComboBox();
+            this.Team3ComboBox = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.showTopicBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -104,6 +117,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.castersTab.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -130,7 +144,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -145,7 +159,7 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -610,6 +624,7 @@
             // castersTab
             // 
             this.castersTab.BackColor = System.Drawing.Color.DarkGray;
+            this.castersTab.Controls.Add(this.groupBox4);
             this.castersTab.Controls.Add(this.label14);
             this.castersTab.Controls.Add(this.showTopicBox);
             this.castersTab.Controls.Add(this.groupBox1);
@@ -620,11 +635,149 @@
             this.castersTab.TabIndex = 0;
             this.castersTab.Text = "Hosts & Guests";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label15);
+            this.groupBox4.Controls.Add(this.Team6ComboBox);
+            this.groupBox4.Controls.Add(this.Team1ComboBox);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.Team5ComboBox);
+            this.groupBox4.Controls.Add(this.Team2ComboBox);
+            this.groupBox4.Controls.Add(this.label18);
+            this.groupBox4.Controls.Add(this.label19);
+            this.groupBox4.Controls.Add(this.Team4ComboBox);
+            this.groupBox4.Controls.Add(this.Team3ComboBox);
+            this.groupBox4.Controls.Add(this.label20);
+            this.groupBox4.ForeColor = System.Drawing.Color.Black;
+            this.groupBox4.Location = new System.Drawing.Point(274, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(262, 192);
+            this.groupBox4.TabIndex = 21;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Teams";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(21, 28);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Team 1";
+            // 
+            // Team6ComboBox
+            // 
+            this.Team6ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Team6ComboBox.FormattingEnabled = true;
+            this.Team6ComboBox.Location = new System.Drawing.Point(73, 159);
+            this.Team6ComboBox.Name = "Team6ComboBox";
+            this.Team6ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Team6ComboBox.TabIndex = 18;
+            // 
+            // Team1ComboBox
+            // 
+            this.Team1ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Team1ComboBox.FormattingEnabled = true;
+            this.Team1ComboBox.Items.AddRange(new object[] {
+            ""});
+            this.Team1ComboBox.Location = new System.Drawing.Point(73, 24);
+            this.Team1ComboBox.Name = "Team1ComboBox";
+            this.Team1ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Team1ComboBox.TabIndex = 7;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(21, 163);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(43, 13);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "Team 6";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.ForeColor = System.Drawing.Color.Black;
+            this.label17.Location = new System.Drawing.Point(21, 55);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(43, 13);
+            this.label17.TabIndex = 17;
+            this.label17.Text = "Team 2";
+            // 
+            // Team5ComboBox
+            // 
+            this.Team5ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Team5ComboBox.FormattingEnabled = true;
+            this.Team5ComboBox.Location = new System.Drawing.Point(73, 132);
+            this.Team5ComboBox.Name = "Team5ComboBox";
+            this.Team5ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Team5ComboBox.TabIndex = 13;
+            // 
+            // Team2ComboBox
+            // 
+            this.Team2ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Team2ComboBox.FormattingEnabled = true;
+            this.Team2ComboBox.Location = new System.Drawing.Point(73, 51);
+            this.Team2ComboBox.Name = "Team2ComboBox";
+            this.Team2ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Team2ComboBox.TabIndex = 8;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.ForeColor = System.Drawing.Color.Black;
+            this.label18.Location = new System.Drawing.Point(21, 136);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(43, 13);
+            this.label18.TabIndex = 14;
+            this.label18.Text = "Team 5";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Location = new System.Drawing.Point(21, 82);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(43, 13);
+            this.label19.TabIndex = 16;
+            this.label19.Text = "Team 3";
+            // 
+            // Team4ComboBox
+            // 
+            this.Team4ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Team4ComboBox.FormattingEnabled = true;
+            this.Team4ComboBox.Location = new System.Drawing.Point(73, 105);
+            this.Team4ComboBox.Name = "Team4ComboBox";
+            this.Team4ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Team4ComboBox.TabIndex = 11;
+            // 
+            // Team3ComboBox
+            // 
+            this.Team3ComboBox.ForeColor = System.Drawing.Color.Black;
+            this.Team3ComboBox.FormattingEnabled = true;
+            this.Team3ComboBox.Location = new System.Drawing.Point(73, 78);
+            this.Team3ComboBox.Name = "Team3ComboBox";
+            this.Team3ComboBox.Size = new System.Drawing.Size(176, 21);
+            this.Team3ComboBox.TabIndex = 9;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.ForeColor = System.Drawing.Color.Black;
+            this.label20.Location = new System.Drawing.Point(21, 109);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(43, 13);
+            this.label20.TabIndex = 15;
+            this.label20.Text = "Team 4";
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(292, 18);
+            this.label14.Location = new System.Drawing.Point(821, 30);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(64, 13);
             this.label14.TabIndex = 10;
@@ -632,7 +785,7 @@
             // 
             // showTopicBox
             // 
-            this.showTopicBox.Location = new System.Drawing.Point(295, 34);
+            this.showTopicBox.Location = new System.Drawing.Point(824, 46);
             this.showTopicBox.Name = "showTopicBox";
             this.showTopicBox.Size = new System.Drawing.Size(270, 20);
             this.showTopicBox.TabIndex = 0;
@@ -673,13 +826,6 @@
             // 
             this.Guest2ComboBox.ForeColor = System.Drawing.Color.Black;
             this.Guest2ComboBox.FormattingEnabled = true;
-            this.Guest2ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
             this.Guest2ComboBox.Location = new System.Drawing.Point(73, 159);
             this.Guest2ComboBox.Name = "Guest2ComboBox";
             this.Guest2ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -689,13 +835,6 @@
             // 
             this.Host1ComboBox.ForeColor = System.Drawing.Color.Black;
             this.Host1ComboBox.FormattingEnabled = true;
-            this.Host1ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA",
-            "RUTH TOOMEY"});
             this.Host1ComboBox.Location = new System.Drawing.Point(73, 24);
             this.Host1ComboBox.Name = "Host1ComboBox";
             this.Host1ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -725,13 +864,6 @@
             // 
             this.Guest1ComboBox.ForeColor = System.Drawing.Color.Black;
             this.Guest1ComboBox.FormattingEnabled = true;
-            this.Guest1ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "DAVID McLAUGHLIN",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA"});
             this.Guest1ComboBox.Location = new System.Drawing.Point(73, 132);
             this.Guest1ComboBox.Name = "Guest1ComboBox";
             this.Guest1ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -741,13 +873,6 @@
             // 
             this.Host2ComboBox.ForeColor = System.Drawing.Color.Black;
             this.Host2ComboBox.FormattingEnabled = true;
-            this.Host2ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA",
-            "RUTH TOOMEY"});
             this.Host2ComboBox.Location = new System.Drawing.Point(73, 51);
             this.Host2ComboBox.Name = "Host2ComboBox";
             this.Host2ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -777,13 +902,6 @@
             // 
             this.Host4ComboBox.ForeColor = System.Drawing.Color.Black;
             this.Host4ComboBox.FormattingEnabled = true;
-            this.Host4ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA",
-            "RUTH TOOMEY"});
             this.Host4ComboBox.Location = new System.Drawing.Point(73, 105);
             this.Host4ComboBox.Name = "Host4ComboBox";
             this.Host4ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -793,13 +911,6 @@
             // 
             this.Host3ComboBox.ForeColor = System.Drawing.Color.Black;
             this.Host3ComboBox.FormattingEnabled = true;
-            this.Host3ComboBox.Items.AddRange(new object[] {
-            "STEPH MORRISON",
-            "EVAN MORRISON",
-            "TY TREMBLAY",
-            "FRANCIS O\'ROURKE",
-            "NAVID SHAFA",
-            "RUTH TOOMEY"});
             this.Host3ComboBox.Location = new System.Drawing.Point(73, 78);
             this.Host3ComboBox.Name = "Host3ComboBox";
             this.Host3ComboBox.Size = new System.Drawing.Size(176, 21);
@@ -863,6 +974,8 @@
             this.groupBox3.ResumeLayout(false);
             this.castersTab.ResumeLayout(false);
             this.castersTab.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -930,6 +1043,19 @@
         private System.Windows.Forms.Button nextWeeksResultsButton;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox showTopicBox;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox Team6ComboBox;
+        private System.Windows.Forms.ComboBox Team1ComboBox;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox Team5ComboBox;
+        private System.Windows.Forms.ComboBox Team2ComboBox;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox Team4ComboBox;
+        private System.Windows.Forms.ComboBox Team3ComboBox;
+        private System.Windows.Forms.Label label20;
     }
 }
 

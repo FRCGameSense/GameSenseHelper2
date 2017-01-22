@@ -308,5 +308,88 @@ namespace GameSenseHelper2.Properties {
                 this["defaultGuests"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection defaultTeams {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["defaultTeams"]));
+            }
+            set {
+                this["defaultTeams"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string team1 {
+            get {
+                return ((string)(this["team1"]));
+            }
+            set {
+                this["team1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string team2 {
+            get {
+                return ((string)(this["team2"]));
+            }
+            set {
+                this["team2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string team3 {
+            get {
+                return ((string)(this["team3"]));
+            }
+            set {
+                this["team3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string team4 {
+            get {
+                return ((string)(this["team4"]));
+            }
+            set {
+                this["team4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string team5 {
+            get {
+                return ((string)(this["team5"]));
+            }
+            set {
+                this["team5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string team6 {
+            get {
+                return ((string)(this["team6"]));
+            }
+            set {
+                this["team6"] = value;
+            }
+        }
     }
 }
